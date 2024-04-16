@@ -1,5 +1,6 @@
 package com.example.webshopspring.service;
 
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -92,7 +93,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
               try {
                 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 if (principal instanceof AuthenticatedPrincipal oauth2Users) {
-                
+
                 }
               } catch (Exception e) {
                 // TODO: handle exception
@@ -107,7 +108,11 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
                     userRepository.save(user);
                 }
 
-                return oauth2User;
+                return new DefaultOAuth2User(
+                        user.getRoles(),
+                        attributes,
+                        "email");
+
             }
         };
     }
