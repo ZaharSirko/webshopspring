@@ -8,7 +8,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
         <header class="p-3 mb-3 border-bottom">
           <div class="container">
@@ -19,7 +19,7 @@
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-.25-11.03c-.18.19-.3.44-.3.72v6.62c0 .28.22.5.5.5s.5-.22.5-.5v-5.2l3.75 3.75c.2.2.51.2.71 0s.2-.51 0-.71L12.48 8.76c-.2-.2-.51-.2-.71 0l-4.48 4.48c-.2.2-.2.51 0 .71s.51.2.71 0L11 10.88v5.2c0 .28.22.5.5.5s.5-.22.5-.5v-6.62c0-.28-.12-.53-.3-.72z"/>
                   </svg>
               </a>
-      
+
               <!-- Пошук -->
               <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -28,7 +28,7 @@
               </ul>
 
               <!-- корзина -->
-              <a th:href="@{|~/tour/basket/${#authentication.name}|}" sec:authorize="isAuthenticated()"> 
+              <a th:href="@{|~/tour/basket/${#authentication.name}|}" sec:authorize="isAuthenticated()">
               <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16" >
                   <path fill="black" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
@@ -36,7 +36,7 @@
                 </form>
               </a>
 
-    
+
 
                 <!-- профіль -->
                 <div class="dropdown text-end" data-bs-auto-close="outside">
@@ -55,10 +55,8 @@
                       </li>
                   </ul>
               </div>
-              
-            
+
+
               </div>
             </div>
           </div>
-        </header>
-</div>
