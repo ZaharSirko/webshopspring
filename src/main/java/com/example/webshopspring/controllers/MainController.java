@@ -25,7 +25,7 @@ public class MainController {
         String username = auth.getName(); // Отримуємо ім'я користувача (username) з аутентифікованого контексту
 
         if (!username.equals("anonymousUser")) { // Перевіряємо, чи користувач аутентифікований
-            User user = userService.getUserByUserName(username); // Отримуємо користувача за ім'ям
+            User user = userService.getUserByEmail(username); // Отримуємо користувача за ім'ям
             model.addAttribute("user", user); // Додаємо користувача до моделі
         }
 

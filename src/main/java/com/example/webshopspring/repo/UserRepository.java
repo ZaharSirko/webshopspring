@@ -11,10 +11,8 @@ import com.example.webshopspring.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // спробувати через or
-    Optional<User> findByEmail(String email);
-    @Query("SELECT u FROM User u WHERE u.userName = :userName")
-    User findByUsername(@Param("userName") String username);
+    @Query("SELECT u FROM User u WHERE u.email = :email")
+    User findByEmail(@Param("email") String email);
     @Query(value = "SELECT nextval(pg_get_serial_sequence('user', 'id'))", nativeQuery = true)
     Long getNextId();
 }

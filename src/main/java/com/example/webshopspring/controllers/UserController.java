@@ -67,22 +67,9 @@ public class UserController {
 
     @GetMapping("/log-in")
     public String log_in(Model model) {
-        System.out.println( "\n"+"\n"+"\n"+"\nasdasdasdasdihbohhhhhahsupduuuuuu");
         return "log-in";
     }
-    
-    // @PostMapping("/log-in")
-    // public String loginUser(@RequestParam("login") String login,
-    //                         @RequestParam("password") String password,
-    //                         Model model) {
-    //     try {
 
-    //         return "redirect:/"; 
-    //     } catch (Exception e) {
-    //         model.addAttribute("loginError", e.getMessage()); 
-    //         return "log-in"; 
-    //     }
-    // }
 
 	record LoginRequest(String username, String password) {};
 	record LoginResponse(String message, String access_jwt_token, String refresh_jwt_token) {};
@@ -125,9 +112,9 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping(value = "/profile/{userName}")
-    public String getUserProfile(@PathVariable String userName, Model model) {
-        User user = userService.getUserByUserName(userName);
+    @GetMapping(value = "/profile/{email}")
+    public String getUserProfile(@PathVariable String email, Model model) {
+        User user = userService.getUserByEmail(email);
         if (user != null) {
             model.addAttribute("user", user);
         } else {
@@ -135,21 +122,21 @@ public class UserController {
             return "user-profile"; 
     }
 
-    @GetMapping(value = "/profile/{userName}/edit")
-    public String getUserProfileEdit(@PathVariable String userName, Model model) {
-        User user = userService.getUserByUserName(userName);
+    @GetMapping(value = "/profile/{email}/edit")
+    public String getUserProfileEdit(@PathVariable String email, Model model) {
+        User user = userService.getUserByEmail(email);
         if (user != null) {
             model.addAttribute("user", user);
         } else {
         }
             return "user-profile-edit"; 
     }
-    @PostMapping("/profile/{userName}/edit")
-    public String editUser(@PathVariable("userName") String userName, @ModelAttribute("updatedUser") User updatedUser) {
-        boolean isUpdated = userService.updateUser(userName, updatedUser);
+    @PostMapping("/profile/{email}/edit")
+    public String editUser(@PathVariable("email") String email, @ModelAttribute("updatedUser") User updatedUser) {
+        boolean isUpdated = userService.updateUser(email, updatedUser);
 
         if (isUpdated) {
-            return "redirect:/profile/" + userName; 
+            return "redirect:/profile/" + email;
         } else {
  
             return "redirect:/error"; 

@@ -25,7 +25,7 @@ public class UserInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         Principal principal = request.getUserPrincipal();
         if (principal != null) {
-            User currentUser = userService.getUserByUserName(principal.getName());
+            User currentUser = userService.getUserByEmail(principal.getName());
             request.setAttribute("currentUser", currentUser);
         }
         return true;

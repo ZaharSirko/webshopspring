@@ -34,12 +34,7 @@ public class User implements UserDetails  {
         generator = "user_sequence"
     )
     @Column(name = "user_id")
-    private int id;
-
-    @NotNull
-    @Column(name = "user_name", unique = true)
-    private String userName;
-
+    private Long id;
 
     @NotNull
     @Column(name = "user_password")
@@ -47,11 +42,11 @@ public class User implements UserDetails  {
 
     @NotNull
     @Column(name = "user_email")
-    String email;
+    private String email;
 
 
     @Column(name = "user_real_name")
-    String real_name;
+    private String real_name;
     
 
     @Column(name = "user_phone_number")
@@ -61,16 +56,6 @@ public class User implements UserDetails  {
     @Column(name = "user_adress")
     private String adress;
 
-    @Column(name = "user_openid")
-    private String openid;
-    
-    public String getOpenid() {
-        return openid;
-    }
-
-    public void setOpenid(String openid) {
-        this.openid = openid;
-    }
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
@@ -79,15 +64,15 @@ public class User implements UserDetails  {
     public User() {
     }
 
-    public User(int id) {
+    public User(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -118,14 +103,6 @@ public class User implements UserDetails  {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-    
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getEmail() {
@@ -160,7 +137,7 @@ public class User implements UserDetails  {
 
     @Override
     public String getUsername() {
-        return userName;
+        return email;
     }
 
     @Override

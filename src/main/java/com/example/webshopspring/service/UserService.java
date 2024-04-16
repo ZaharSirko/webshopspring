@@ -55,8 +55,8 @@ public class UserService implements UserDetailsService  {
 }
 
 @Override
-public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userRepository.findByUsername(username);
+public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    User user = userRepository.findByEmail(email);
 
     if (user == null) {
         throw new UsernameNotFoundException("User not found");
@@ -66,7 +66,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 }
 
     public boolean saveUser(User user) {
-         User userFromDB = userRepository.findByUsername(user.getUsername());
+         User userFromDB = userRepository.findByEmail(user.getUsername());
 
         if (userFromDB != null) {
             return false;
@@ -87,9 +87,8 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
                 Map<String, Object> attributes = oauth2User.getAttributes();
       
                 String email = (String) attributes.get("email");
-                String userName = email;
 
-                User user = userRepository.findByUsername(userName);
+                User user = userRepository.findByEmail(email);
               try {
                 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 if (principal instanceof AuthenticatedPrincipal oauth2Users) {
@@ -100,7 +99,6 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
               }  
                 if (user == null) {
                     user = new User();
-                    user.setUserName(userName);
                     user.setEmail(email);
                     user.setPassword(encoder().encode(UUID.randomUUID().toString()));
                     user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
@@ -122,8 +120,8 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
         return userFromDb.orElse(new User());
     }
 
-    public User getUserByUserName(String username) {
-        return userRepository.findByUsername(username);
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public boolean deleteUser(Long userId) {
@@ -135,8 +133,8 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
     }
 
 
-    public boolean updateUser(String userName, User updatedUser) {
-        User existingUser = userRepository.findByUsername(userName);
+    public boolean updateUser(String email, User updatedUser) {
+        User existingUser = userRepository.findByEmail(email);
         if (existingUser != null) {
             existingUser.setReal_name(updatedUser.getReal_name());
             existingUser.setEmail(updatedUser.getEmail());
