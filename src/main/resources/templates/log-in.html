@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <style>
+        h2.clickable-heading {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h2.clickable-heading svg {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 mt-5">
+            <h2 onclick="window.location.href='/'" class="clickable-heading mb-4 link-body-emphasis text-decoration-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" class="bi me-2">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-.25-11.03c-.18.19-.3.44-.3.72v6.62c0 .28.22.5.5.5s.5-.22.5-.5v-5.2l3.75 3.75c.2.2.51.2.71 0s.2-.51 0-.71L12.48 8.76c-.2-.2-.51-.2-.71 0l-4.48 4.48c-.2.2-.2.51 0 .71s.51.2.71 0L11 10.88v5.2c0 .28.22.5.5.5s.5-.22.5-.5v-6.62c0-.28-.12-.53-.3-.72z"/>
+                </svg>
+                Log in
+            </h2>
+            <form th:action="@{/log-in}" method="post" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="username">Login</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                    <div class="invalid-feedback">
+                       Enter login
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <div class="invalid-feedback">
+                        Enter password
+                    </div>
+                    <small class="form-text text-muted">Don't have an account? <a href="/sign-in">Register here</a></small>
+                </div>
+                <div class="ui basic segment fluid container">
+                    <div class="ui vertical fluid wrapping spaced buttons">
+                        <a class="ui fluid large basic secondary button" data-th-href="@{/oauth2/authorization/google}">
+                            <i class="google icon"></i>
+                            Sign in via Google
+                        </a>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-4">Log in</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

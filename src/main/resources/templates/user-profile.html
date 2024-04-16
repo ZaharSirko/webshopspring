@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>User profile</title>
+</head>
+
+<body>
+  <header th:insert="~{blocks/header::header}"></header>
+  <main class="container mt-4">
+
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="list-group list-group-flush account-settings-links">
+               <a class="list-group-item list-group-item-action"   th:href="@{|~/profile/${#authentication.name}|}">General</a>
+                 <a class="list-group-item list-group-item-action"  th:href="@{|~/profile/${#authentication.name}/credit-cards|}">Credit card</a> 
+             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">User Name</h6>
+              </div>
+              <div class="col-sm-9 text-secondary"  th:text="${user.getUsername()}"></div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Full Name</h6>
+              </div>
+              <div class="col-sm-9 text-secondary" th:text="@{${user.getFirstName()}+' '+${user.getSecondName()}}" > </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary" th:text="${user.getEmail()}"></div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Phone</h6>
+              </div>
+              <div class="col-sm-9 text-secondary" th:text="${user.getPhoneNumber()}"></div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-12"> <a class="btn btn-primary" th:href=@{|~/profile/${user.getUsername()}/edit|}>Edit</a></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+  <footer th:insert="~{blocks/footer::footer}"></footer>
+</body>
+
+</html>
