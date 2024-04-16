@@ -41,7 +41,7 @@ public class User implements UserDetails  {
     private String password;
 
     @NotNull
-    @Column(name = "user_email")
+    @Column(name = "user_email", unique = true)
     private String email;
 
 

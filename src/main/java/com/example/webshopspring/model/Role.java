@@ -2,19 +2,15 @@ package com.example.webshopspring.model;
 
 import java.util.Set;
 
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "role")
 public class Role implements GrantedAuthority{
     @Id
     private Long id;
+    @Column(unique = true)
     private String name;
     @Transient
     @ManyToMany(mappedBy = "roles")
