@@ -33,4 +33,54 @@ create table users_roles
     primary key (user_user_id, roles_id)
 );
 
+create table goods
+(
+    good_id          bigint         not null
+        primary key,
+    good_brand       varchar(255)   not null,
+    good_description varchar(255)   not null,
+    good_likes       integer,
+    good_name        varchar(255)   not null,
+    good_photo       varchar(255)[] not null,
+    price_id         bigint         not null
+);
+
+create table prices
+(
+    price_id       bigint           not null
+        primary key,
+    bought_amount  integer          not null,
+    client_price   double precision not null,
+    created_at     varchar(255),
+    deleted_at     varchar(255),
+    sold_amount    integer,
+    supplier_price double precision not null,
+    good_id        bigint           not null
+        constraint fkglvb0aarlmr3hwh6jbt4m5cai
+            references goods
+);
+
+alter table goods
+    add constraint fk2bgi34b5shv2w1w0ntsfp2e5p
+        foreign key (price_id) references prices;
+
+create table card
+(
+    id      bigint not null
+        primary key,
+    good_id bigint
+        constraint fkc2panvvu6j74urelpb1uwuuo
+            references goods,
+    user_id bigint
+        constraint fkq5apcc4ddrab8t48q2uqvyquq
+            references users
+);
+
+create table types
+(
+    type_id    bigint       not null
+        primary key,
+    deleted_at varchar(255),
+    type_name  varchar(255) not null
+);
 

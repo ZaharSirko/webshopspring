@@ -1,11 +1,7 @@
 package com.example.webshopspring.model;
 import jakarta.persistence.*;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-
-import java.util.HashSet;
-import java.util.Set;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "card")
@@ -23,10 +19,12 @@ public class Card {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "good_id")
     private Good good;
@@ -39,4 +37,19 @@ public class Card {
         this.id = id;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Good getGood() {
+        return good;
+    }
+
+    public void setGood(Good good) {
+        this.good = good;
+    }
 }
