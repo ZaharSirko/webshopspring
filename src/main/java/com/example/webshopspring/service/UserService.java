@@ -89,14 +89,6 @@ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundExcep
                 String email = (String) attributes.get("email");
 
                 User user = userRepository.findByEmail(email);
-              try {
-                Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                if (principal instanceof AuthenticatedPrincipal oauth2Users) {
-
-                }
-              } catch (Exception e) {
-                // TODO: handle exception
-              }  
                 if (user == null) {
                     user = new User();
                     user.setEmail(email);
@@ -113,11 +105,6 @@ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundExcep
 
             }
         };
-    }
-
-    public User findUserById(Long userId) {
-        Optional<User> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElse(new User());
     }
 
     public User getUserByEmail(String email) {
@@ -145,9 +132,6 @@ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundExcep
         }
         return false;
     }
-
-
-
 
     
     }

@@ -49,13 +49,8 @@ public class User implements UserDetails  {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @ManyToMany
-    @JoinTable(
-            name = "card",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "good_id")
-    )
-    private Set<Good> goods = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Card> user = new HashSet<>();
 
 
     public User() {

@@ -46,8 +46,9 @@ public class Good {
     @JoinColumn(name = "price_id")
     private Price goodPrice;
 
-   @ManyToMany(mappedBy = "goods")
-   private Set<User> users = new HashSet<>();
+    @OneToMany(mappedBy = "good", cascade = CascadeType.ALL)
+    private Set<Card> good = new HashSet<>();
+
 
     public Good(long id, String goodName, String goodDescription, String goodBrand, String[] goodPhoto, int goodLikes) {
 
