@@ -33,16 +33,9 @@
             <hr>
             <div class="row">
               <div class="col-sm-3">
-                <h6 class="mb-0">Full Name</h6>
+                <h6 class="mb-0">Name</h6>
               </div>
-              <div class="col-sm-9 text-secondary" th:text="@{${user.getFirstName()}+' '+${user.getSecondName()}}" > </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <h6 class="mb-0">Email</h6>
-              </div>
-              <div class="col-sm-9 text-secondary" th:text="${user.getEmail()}"></div>
+              <div class="col-sm-9 text-secondary" th:text="${user.getReal_name()}"></div>
             </div>
             <hr>
             <div class="row">
@@ -50,6 +43,13 @@
                 <h6 class="mb-0">Phone</h6>
               </div>
               <div class="col-sm-9 text-secondary" th:text="${user.getPhoneNumber()}"></div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Address</h6>
+              </div>
+              <div class="col-sm-9 text-secondary" th:text="${user.getAdress()}"></div>
             </div>
             <hr>
             <div class="row">

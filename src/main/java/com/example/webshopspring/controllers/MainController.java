@@ -3,6 +3,7 @@ package com.example.webshopspring.controllers;
 
 import java.security.Principal;
 
+import com.example.webshopspring.service.GoodService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,12 @@ import com.example.webshopspring.service.UserService;
 @Controller
 public class MainController {
 	private final UserService userService;
+    public final GoodService goodService;
 
-	public MainController(UserService userService){    
+	public MainController(UserService userService, GoodService goodService){
 		this.userService= userService;
-	}
+        this.goodService = goodService;
+    }
 	@GetMapping("/")
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

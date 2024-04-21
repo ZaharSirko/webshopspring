@@ -9,7 +9,6 @@ import com.example.webshopspring.config.RsaProperties;
 @SpringBootApplication
 @EnableConfigurationProperties(RsaProperties.class)
 public class WebshopspringApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(WebshopspringApplication.class, args);
     }

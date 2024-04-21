@@ -65,7 +65,7 @@ public class UserController {
 
 
     @GetMapping("/log-in")
-    public String log_in(Model model) {
+    public String log_in() {
         return "log-in";
     }
 
@@ -127,6 +127,7 @@ public class UserController {
         if (user != null) {
             model.addAttribute("user", user);
         } else {
+            return  "user-profile";
         }
             return "user-profile-edit"; 
     }
