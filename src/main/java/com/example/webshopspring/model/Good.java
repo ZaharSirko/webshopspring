@@ -41,7 +41,7 @@ public class Good {
     @Column(name = "good_likes")
     private int goodLikes;
 
-    @NotNull
+//@NotNull
     @ManyToOne
     @JoinColumn(name = "price_id")
     private Price goodPrice;

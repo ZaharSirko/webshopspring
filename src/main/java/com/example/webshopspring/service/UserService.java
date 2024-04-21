@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -35,10 +34,7 @@ public class UserService implements UserDetailsService  {
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
-    
 
-    DefaultOAuth2UserService oauth2Delegate = new DefaultOAuth2UserService();
-    OidcUserService oidcDelegate = new OidcUserService();
     @Bean
    public PasswordEncoder encoder() {
     return new BCryptPasswordEncoder();                                                                     

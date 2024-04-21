@@ -2,38 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Tour</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Good</title>
+    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-<div class="container mt-4">
-    <h2>Add New Tour</h2>
-    <form  th:action="@{/good/add}" method="post" enctype="multipart/form-data">
+<div class="container">
+    <h2>Add New Good</h2>
+    <form th:action="@{/good/add}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="goodName">Good Name:</label>
+            <input type="text" class="form-control" id="goodName" name="goodName" required>
+        </div>
+        <div class="form-group">
+            <label for="goodDescription">Good Description:</label>
+            <textarea class="form-control" id="goodDescription" name="goodDescription" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="goodBrand">Good Brand:</label>
+            <input type="text" class="form-control" id="goodBrand" name="goodBrand" required>
+        </div>
 <!--        <div class="form-group">-->
-<!--            <label for="imageFile">Good Photo:</label>-->
-<!--            <input type="file" class="form-control-file" id="imageFile" name="imageFile">-->
-<!--        </div> -->
-            <div class="form-group">
-                <label for="goodName">Good Name:</label>
-                <input type="text" class="form-control" id="goodName" name="goodName" required>
-            </div>
-            <div class="form-group">
-                <label for="goodBrand">Good Brand:</label>
-                <input type="text" class="form-control" id="goodBrand" name="goodBrand" required>
-            </div>
-<!--            <div class="form-group">-->
-<!--                <label for="price">Price:</label>-->
-<!--                <input type="number" class="form-control" id="price" name="price" required>-->
-<!--            </div>-->
-            <div class="form-group">
-                <label for="goodDescription">Good Description:</label>
-                <textarea class="form-control" id="goodDescription" name="goodDescription" rows="4" required></textarea>
-            </div>
-
+<!--            <label for="goodPrice">Good Price:</label>-->
+<!--            <input type="number" class="form-control" id="goodPrice" name="goodPrice" required>-->
+<!--        </div>-->
+        <div class="form-group">
+            <label for="imageFile">Select Images:</label>
+            <input type="file" class="form-control-file" id="imageFile" name="imageFile" multiple required>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
