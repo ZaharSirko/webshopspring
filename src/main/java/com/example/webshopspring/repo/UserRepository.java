@@ -12,5 +12,5 @@ import com.example.webshopspring.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.email = :email")
-    User findByEmail(@Param("email") String email);
+    Optional<User> findByEmail(@Param("email") String email);
 }

@@ -3,6 +3,8 @@ package com.example.webshopspring.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.sql.Date;
+
 
 @Entity
 @Table(name = "prices")
@@ -20,7 +22,7 @@ public class Price {
     @Column(name = "price_id")
     private Long id;
 
-    @NotNull
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "good_id")
     private Good good_id;
@@ -41,17 +43,17 @@ public class Price {
     private int sold_amount;
 
     @Column(name = "created_at")
-    private String created_at;
+    private Date created_at;
 
     @Column(name = "deleted_at")
-    private String deleted_at;
+    private Date deleted_at;
 
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -64,19 +66,19 @@ public class Price {
     }
 
 
-    public String getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 
-    public String getDeleted_at() {
+    public Date getDeleted_at() {
         return deleted_at;
     }
 
-    public void setDeleted_at(String deleted_at) {
+    public void setDeleted_at(Date deleted_at) {
         this.deleted_at = deleted_at;
     }
 

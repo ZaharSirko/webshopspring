@@ -1,7 +1,9 @@
 package com.example.webshopspring.controllers;
 
 import com.example.webshopspring.model.Good;
+import com.example.webshopspring.model.Price;
 import com.example.webshopspring.service.GoodService;
+import com.example.webshopspring.service.PriceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,13 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class GoodController {
     public final GoodService goodService;
+    public final PriceService priceService;
 
-    public GoodController(GoodService goodService) {
+    public GoodController(GoodService goodService, PriceService priceService) {
         this.goodService = goodService;
+        this.priceService = priceService;
     }
 
     @GetMapping("/good/{id}")
@@ -31,7 +36,9 @@ public class GoodController {
 
 
     @GetMapping("/good/add")
-    public String addNewGood() {
+    public String addNewGood(Model model) {
+        List<Price> price = priceService.getAllPrices();
+        model.addAttribute("price",price);
         return "good-add";
     }
 
@@ -47,8 +54,7 @@ public class GoodController {
                 photosPath[i] = goodService.saveImage(imageFile[i]);
             }
             goodService.addGood(newGood.getGoodName(), newGood.getGoodDescription(), newGood.getGoodBrand(),
-                    photosPath);
-//            newGood.getGoodPrice()
+                    photosPath,  newGood.getGoodPrice());
             return "redirect:/";
         }
     }

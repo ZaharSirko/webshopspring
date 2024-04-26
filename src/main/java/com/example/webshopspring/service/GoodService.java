@@ -35,25 +35,25 @@ public GoodService(GoodRepository goodRepository, PriceRepository priceRepositor
 }
 
 public  Good getGoodById(long id) {
-    return goodRepository.findById(id);
+    return goodRepository.findById(id).orElse(null);
 }
 
 public Good getGoodByName(String name){
- return   goodRepository.findByGoodName(name);
+ return   goodRepository.findByGoodName(name).orElse(null);
 }
 
 public List<Good> getAllGoods(){
     return goodRepository.findAll();
 }
 
-public Good addGood(String goodName, String goodDescription, String goodBrand, String[] goodPhoto){
-//    Price goodPrice
+public Good addGood(String goodName, String goodDescription, String goodBrand, String[] goodPhoto,  Price goodPrice){
+
     Good newGood = new Good();
     newGood.setGoodName(goodName);
     newGood.setGoodDescription(goodDescription);
     newGood.setGoodBrand(goodBrand);
     newGood.setGoodPhoto(goodPhoto);
-    newGood.setGoodPrice(null);
+    newGood.setGoodPrice(goodPrice);
     newGood.setGoodLikes(0);
 
     return goodRepository.save(newGood);

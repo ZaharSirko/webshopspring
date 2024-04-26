@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService  {
 
 @Override
 public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    User user = userRepository.findByEmail(email);
+    User user = userRepository.findByEmail(email).orElse(null);
 
     if (user == null) {
         throw new UsernameNotFoundException("User not found");
@@ -52,7 +52,7 @@ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundExcep
 }
 
     public boolean saveUser(User user) {
-         User userFromDB = userRepository.findByEmail(user.getUsername());
+         User userFromDB = userRepository.findByEmail(user.getUsername()).orElse(null);
 
         if (userFromDB != null) {
             return false;
@@ -74,7 +74,7 @@ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundExcep
       
                 String email = (String) attributes.get("email");
 
-                User user = userRepository.findByEmail(email);
+                User user = userRepository.findByEmail(email).orElse(null);
                 if (user == null) {
                     user = new User();
                     user.setEmail(email);
@@ -94,7 +94,7 @@ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundExcep
     }
 
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElse(null);
     }
 
     public boolean deleteUser(Long userId) {
@@ -107,7 +107,7 @@ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundExcep
 
 
     public boolean updateUser(String email, User updatedUser) {
-        User existingUser = userRepository.findByEmail(email);
+        User existingUser = userRepository.findByEmail(email).orElse(null);
         if (existingUser != null) {
             existingUser.setReal_name(updatedUser.getReal_name());
             existingUser.setEmail(updatedUser.getEmail());
