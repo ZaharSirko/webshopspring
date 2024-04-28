@@ -10,8 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface GoodRepository extends JpaRepository<Good, Long> {
-    Good findByGood(Good good);
-
     @Query("SELECT g FROM Good g Where g.id = :id")
     Optional<Good> findById(@Param("id") long id);
 

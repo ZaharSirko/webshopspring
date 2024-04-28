@@ -43,9 +43,13 @@
             <p class="card-text" th:text="${good.goodDescription}"></p>
             <p class="card-text"><strong>Brand:</strong> <span th:text="${good.goodBrand}"></span></p>
             <p class="card-text"><strong>Price:</strong> $<span th:text="${good.goodPrice.getClient_price()}"></span></p>
+            <form th:action="@{|~/good/${good.getId()}|}" method="post">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
         </div>
     </div>
 </div>
+
 </main>
 <footer th:insert="~{blocks/footer::footer}"></footer>
 
