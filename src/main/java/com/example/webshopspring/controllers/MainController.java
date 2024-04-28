@@ -2,8 +2,11 @@ package com.example.webshopspring.controllers;
 
 
 import java.security.Principal;
+import java.util.List;
 
+import com.example.webshopspring.model.Good;
 import com.example.webshopspring.service.GoodService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,23 +18,19 @@ import com.example.webshopspring.service.UserService;
 
 @Controller
 public class MainController {
-	private final UserService userService;
-    public final GoodService goodService;
+final private GoodService goodService;
 
-	public MainController(UserService userService, GoodService goodService){
-		this.userService= userService;
+    @Autowired
+    public MainController(GoodService goodService) {
         this.goodService = goodService;
     }
-	@GetMapping("/")
+
+
+    @GetMapping("/")
     public String home(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName(); // Отримуємо ім'я користувача (username) з аутентифікованого контексту
+    List<Good> goodList = goodService.getAllGoods();
 
-        if (!username.equals("anonymousUser")) { // Перевіряємо, чи користувач аутентифікований
-            User user = userService.getUserByEmail(username); // Отримуємо користувача за ім'ям
-            model.addAttribute("user", user); // Додаємо користувача до моделі
-        }
-
+        model.addAttribute("goods", goodList);
         model.addAttribute("title", "Main Page");
         return "home";
     }

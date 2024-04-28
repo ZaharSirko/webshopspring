@@ -4,6 +4,7 @@ import com.example.webshopspring.model.Good;
 import com.example.webshopspring.model.Price;
 import com.example.webshopspring.service.GoodService;
 import com.example.webshopspring.service.PriceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ public class PriceController {
     final private PriceService priceService;
     private final GoodService goodService;
 
+    @Autowired
     public PriceController(PriceService priceService, GoodService goodService) {
         this.priceService = priceService;
         this.goodService = goodService;
@@ -35,7 +37,6 @@ public class PriceController {
             return "redirect:/about";
         } else {
             priceService.addPrice(price);
-            goodService.getGoodById(price.getGood_id().getId()).setGoodPrice(price);
             return "redirect:/";
         }
     }
@@ -58,7 +59,6 @@ public class PriceController {
             return "redirect:/about";
         } else {
             priceService.updatePrice(priceId, updatedPrice);
-            goodService.getGoodById(updatedPrice.getGood_id().getId()).setGoodPrice(updatedPrice);
             return "redirect:/";
         }
     }

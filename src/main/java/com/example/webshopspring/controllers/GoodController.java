@@ -4,6 +4,7 @@ import com.example.webshopspring.model.Good;
 import com.example.webshopspring.model.Price;
 import com.example.webshopspring.service.GoodService;
 import com.example.webshopspring.service.PriceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ public class GoodController {
     public final GoodService goodService;
     public final PriceService priceService;
 
+    @Autowired
     public GoodController(GoodService goodService, PriceService priceService) {
         this.goodService = goodService;
         this.priceService = priceService;

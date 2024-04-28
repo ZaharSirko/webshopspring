@@ -42,7 +42,7 @@ create table goods
     good_likes       integer,
     good_name        varchar(255)   not null,
     good_photo       varchar(255)[] not null,
-    price_id         bigint         not null
+    price_id         bigint
 );
 
 create table prices
@@ -51,11 +51,11 @@ create table prices
         primary key,
     bought_amount  integer          not null,
     client_price   double precision not null,
-    created_at     varchar(255),
-    deleted_at     varchar(255),
+    created_at     date,
+    deleted_at     date,
     sold_amount    integer,
     supplier_price double precision not null,
-    good_id        bigint           not null
+    good_id        bigint
         constraint fkglvb0aarlmr3hwh6jbt4m5cai
             references goods
 );

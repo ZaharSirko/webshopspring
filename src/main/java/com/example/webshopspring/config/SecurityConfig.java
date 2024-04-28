@@ -92,11 +92,7 @@ public class SecurityConfig {
             .oauth2Login(oc -> oc
             .loginPage("/log-in")
             .defaultSuccessUrl("/", true)
-            .permitAll()
-            // .userInfoEndpoint(ui -> ui
-            //                     .userService(userService.oauth2UserService())
-            //     )
-                )
+            .permitAll())
             .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)  
             .logout((logout) -> logout
                 .logoutUrl("/logout")
