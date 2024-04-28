@@ -34,7 +34,7 @@ public GoodService(GoodRepository goodRepository, PriceRepository priceRepositor
     this.typesRepository = typesRepository;
 }
 
-public  Good getGoodById(long id) {
+public  Good getGoodById(Long id) {
     return goodRepository.findById(id).orElse(null);
 }
 
@@ -59,11 +59,21 @@ public Good addGood(String goodName, String goodDescription, String goodBrand, S
     return goodRepository.save(newGood);
 }
 
+public Good addGood(Good good){
+    return goodRepository.save(good);
+}
+
 public  boolean deleteGood(Good good){
     return  true;
 }
-public boolean updateGood(Good good){
-    return true;
+public boolean updateGood(Long id,Good good){
+    Good existingGood = getGoodById(id);
+    if(existingGood != null){
+
+
+        return  true;
+    }
+    return false;
 }
 
     public String saveImage(MultipartFile imageFile) throws IOException {

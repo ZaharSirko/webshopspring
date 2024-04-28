@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -34,6 +35,30 @@ public class PriceController {
             return "redirect:/about";
         } else {
             priceService.addPrice(price);
+            goodService.getGoodById(price.getGood_id().getId()).setGoodPrice(price);
+            return "redirect:/";
+        }
+    }
+
+    @GetMapping("/price/edit/{priceId}")
+    public String price(@PathVariable Long priceId, Model model) {
+        Price price = priceService.getPriceById(priceId);
+        List<Good> good = goodService.getAllGoods();
+        if (price != null) {
+            model.addAttribute("good",good);
+            model.addAttribute("price",price);
+            return "price-edit";
+        }
+        else    return "redirect:/";
+    }
+
+    @PostMapping("/price/edit/{priceId}")
+    public String edit(@PathVariable Long priceId, @ModelAttribute Price updatedPrice, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/about";
+        } else {
+            priceService.updatePrice(priceId, updatedPrice);
+            goodService.getGoodById(updatedPrice.getGood_id().getId()).setGoodPrice(updatedPrice);
             return "redirect:/";
         }
     }
