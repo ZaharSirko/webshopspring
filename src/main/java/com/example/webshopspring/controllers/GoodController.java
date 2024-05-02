@@ -40,6 +40,7 @@ public class GoodController {
     @GetMapping("/good/add")
     public String addNewGood(Model model) {
         List<Price> price = priceService.getAllPrices();
+        model.addAttribute("good", new Good());
         model.addAttribute("price",price);
         return "good-add";
     }

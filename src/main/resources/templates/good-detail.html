@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,10 +43,18 @@
             <p class="card-text" th:text="${good.goodDescription}"></p>
             <p class="card-text"><strong>Brand:</strong> <span th:text="${good.goodBrand}"></span></p>
             <p class="card-text"><strong>Price:</strong> $<span th:text="${good.goodPrice.getClient_price()}"></span></p>
+
+            <div sec:authorize="isAuthenticated()">
             <form th:action="@{|~/good/${good.getId()}|}" method="post">
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>
-        </div>
+            </div>
+
+            <div sec:authorize="!isAuthenticated()">
+                        <h5 class="card-title">Buy good</h5>
+                        <form action="/log-in">
+                            <button type="submit" class="btn btn-primary"  >Log in</button>
+                        </form>
     </div>
 </div>
 

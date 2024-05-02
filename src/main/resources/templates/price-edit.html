@@ -3,38 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Price</title>
+    <title>Edit Price</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
     <h2>Add New Price</h2>
-    <form th:action="@{'/price/edit/' + ${price.id}}" method="post">
+    <form th:action="@{'/price/edit/' + ${price.id}}" th:object="${price}" method="post">
         <div class="form-group">
             <label for="good_id">Good:</label>
             <select class="form-control" id="good_id" name="good_id">
-                <option th:value="${price.getGood_id().getId()}"  th:text=" ${price.getGood_id().getId()} + '(Original Good) ' +${price.getGood_id().getGoodName()} + ' (Good Name), ' + ${price.getGood_id().getGoodBrand()} + ' (Good Brand)'"></option>
+                <option th:value="*{getGood_id().getId()}"  th:text=" *{getGood_id().getId()} + '(Original Good) ' + *{getGood_id().getGoodName()} + ' (Good Name), ' + *{getGood_id().getGoodBrand()} + ' (Good Brand)'"></option>
                 <th:block th:each="goods : ${good}">
                     <option th:value="${goods.id}" th:text="${goods.goodName} + ' (Good Name), ' + ${goods.goodBrand} + ' (Good Brand)'"></option>
                 </th:block>
             </select>
         </div>
         <div class="form-group">
-            <label for="supplier_price">Supplier Price:</label>
-            <input type="number" class="form-control" id="supplier_price" name="supplier_price" required th:value="${price.getSupplier_price()}">
+            <label>Supplier Price:</label>
+            <input type="number" class="form-control" th:field="*{supplier_price}" required th:value="*{getSupplier_price()}">
         </div>
         <div class="form-group">
-            <label for="client_price">Client Price:</label>
-            <input type="number" class="form-control" id="client_price" name="client_price" required th:value="${price.getClient_price()}">
+            <label >Client Price:</label>
+            <input type="number" class="form-control" th:field="*{client_price}" required th:value="*{getClient_price()}">
         </div>
         <div class="form-group">
-            <label for="bought_amount">Bought Amount:</label>
-            <input type="number" class="form-control" id="bought_amount" name="bought_amount" required th:value="${price.getBought_amount()}">
-        </div>
-        <div class="form-group">
-            <label for="created_at">Created At:</label>
-            <input type="date" class="form-control" id="created_at" name="created_at" required th:value="${price.getCreated_at()}">
+            <label >Bought Amount:</label>
+            <input type="number" class="form-control" th:field="*{bought_amount}" required th:value="*{getBought_amount()}">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

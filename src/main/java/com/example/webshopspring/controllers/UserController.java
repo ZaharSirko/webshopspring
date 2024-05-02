@@ -56,7 +56,7 @@ public class UserController {
             return "sign-in";
         }
         if (!userService.saveUser(user)){
-            model.addAttribute("usernameError", "User with this login has been created");
+            model.addAttribute("message", "User with this login has been created");
             return "sign-in";
         }
 

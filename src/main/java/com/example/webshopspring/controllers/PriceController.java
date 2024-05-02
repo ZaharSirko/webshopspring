@@ -28,6 +28,7 @@ public class PriceController {
     @GetMapping("/price/add")
     public String price(Model model) {
         List<Good> good = goodService.getAllGoods();
+        model.addAttribute("price", new Price());
         model.addAttribute("good",good);
         return "price-add";
     }

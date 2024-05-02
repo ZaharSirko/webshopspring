@@ -18,7 +18,8 @@
     <div class="container">
       <div class="row">
         <th:block th:each="good : ${goods}">
-          <div class="col-md-4">
+
+          <div class="col-md-4" th:if="${good.goodPrice!=null}">
             <div class="card tour-card">
               <img  th:src="@{'~/' +${good.goodPhoto[0]}}" class="card-img-top tour-image" alt="Good Image" />
               <div class="card-body">
@@ -30,6 +31,7 @@
               </div>
             </div>
           </div>
+
         </th:block>
       </div>
     </div>
