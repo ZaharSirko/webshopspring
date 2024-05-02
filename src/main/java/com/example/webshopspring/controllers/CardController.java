@@ -39,10 +39,9 @@ public class CardController {
 
  }
 
-    @PostMapping(value = "/card/{userName}/cancel/{goodId}")
-    public String cancelTourReservation( @PathVariable String userName,@PathVariable Long goodId ) {
-       cardService.removeGoodFromUserCard(goodId, userName);
-
+    @PostMapping(value = "/card/{userName}/cancel/{cardId}")
+    public String cancelTourReservation( @PathVariable String userName,@PathVariable Long cardId ) {
+        cardService.removeGoodFromUserCard(cardId);
         return "redirect:/card/" + userName;
     }
 

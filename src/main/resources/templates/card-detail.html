@@ -30,7 +30,7 @@
                             <td th:text="${card.good.goodDescription}" style="vertical-align: middle;"></td>
                             <td th:text="${card.good.goodPrice.getClient_price()}" style="vertical-align: middle;"></td>
                             <td style="vertical-align: middle;">
-                                <form th:action="@{'/card/' + ${#authentication.name} + '/cancel/'+ ${card.good.getId()}}" method="post">
+                                <form th:action="@{'/card/' + ${#authentication.name} + '/cancel/'+ ${card.id}}" method="post">
                                     <button type="submit" class="btn btn-danger">Cancel</button>
                                 </form>
                             </td>

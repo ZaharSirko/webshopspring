@@ -15,7 +15,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     Optional<Card> findCardByUserEmail(@Param("user_email") String user_email);
 
     @Modifying
-    @Query("DELETE FROM Card c where c.good.id = :good_id and c.user.id = :user_id")
-    void deleteGoodFromUserCard(@Param("good_id")Long good_id, @Param("user_id") Long user_id);
+    @Query("DELETE FROM Card c where c.id =:card_id")
+    void deleteGoodFromUserCard(@Param("card_id")Long card_id);
 
 }

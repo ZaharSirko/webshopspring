@@ -6,6 +6,7 @@ import com.example.webshopspring.model.User;
 import com.example.webshopspring.repo.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CardService {
@@ -36,13 +37,8 @@ public boolean addGoodToUserCard(Long id, String userEmail){
     }
        return false;
 }
-public boolean removeGoodFromUserCard(Long id, String userEmail){
-        Good good = goodService.getGoodById(id);
-        User user =userService.getUserByEmail(userEmail);
-        if (user != null && good != null){
-           cardRepository.deleteGoodFromUserCard(good.getId(),user.getId());
-            return true;
-        }
-        return false;
+    @Transactional
+    public void removeGoodFromUserCard(Long id){
+    cardRepository.deleteGoodFromUserCard(id);
 }
 }
