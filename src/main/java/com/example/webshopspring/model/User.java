@@ -2,7 +2,10 @@ package com.example.webshopspring.model;
 
 import java.util.*;
 
+import com.example.webshopspring.annotations.PasswordMatches;
+import com.example.webshopspring.annotations.ValidEmail;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +14,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
+@PasswordMatches
 public class User implements UserDetails  {
     @Id
     @SequenceGenerator(
@@ -26,10 +30,15 @@ public class User implements UserDetails  {
     private Long id;
 
     @NotNull
+    @NotEmpty
     @Column(name = "user_password")
     private String password;
 
+    private String matchingPassword;
+
     @NotNull
+    @ValidEmail
+    @NotEmpty
     @Column(name = "user_email", unique = true)
     private String email;
 
@@ -111,6 +120,14 @@ public class User implements UserDetails  {
 
     public void setReal_name(String real_name) {
         this.real_name = real_name;
+    }
+
+    public String getMatchingPassword() {
+        return matchingPassword;
+    }
+
+    public void setMatchingPassword(String matchingPassword) {
+        this.matchingPassword = matchingPassword;
     }
 
     @Override
