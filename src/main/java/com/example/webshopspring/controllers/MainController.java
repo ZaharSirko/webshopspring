@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin("http://localhost:3000")
 public class MainController {
-final private GoodService goodService;
+final private GoodService goodService;asdas
 
     @Autowired
     public MainController(GoodService goodService) {
