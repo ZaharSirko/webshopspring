@@ -7,15 +7,14 @@ import com.example.webshopspring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.security.Principal;
 
 
-@Controller
+@RestController
+@CrossOrigin("http://localhost:3000")
 public class CardController {
     private final CardService cardService;
 
@@ -25,24 +24,18 @@ public class CardController {
     }
 
     @GetMapping("/card/{user_email}")
-    public String viewCard(@PathVariable("user_email") String userEmail, Model model) {
-       Card card = cardService.getCardByUserEmail(userEmail);
-        model.addAttribute("card", card);
-        model.addAttribute("title", "Card Page");
-        return "card-detail";
+    public Card viewCard(@PathVariable("user_email") String userEmail) {
+       return cardService.getCardByUserEmail(userEmail);
     }
 
  @PostMapping("/good/{id}")
-    public String addGoodToUserCard(@PathVariable("id") Long id, Principal principal) {
-         cardService.addGoodToUserCard(id, principal.getName());
-         return "redirect:/card/" + principal.getName();
-
+    public boolean addGoodToUserCard(@PathVariable("id") Long id, Principal principal) {
+       return  cardService.addGoodToUserCard(id, principal.getName());
  }
 
     @PostMapping(value = "/card/{userName}/cancel/{cardId}")
-    public String cancelTourReservation( @PathVariable String userName,@PathVariable Long cardId ) {
+    public void cancelTourReservation( @PathVariable String userName,@PathVariable Long cardId ) {
         cardService.removeGoodFromUserCard(cardId);
-        return "redirect:/card/" + userName;
     }
 
 }

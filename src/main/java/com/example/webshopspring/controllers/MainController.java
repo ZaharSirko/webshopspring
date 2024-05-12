@@ -7,11 +7,13 @@ import com.example.webshopspring.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
-
-@Controller
+@RestController
+@CrossOrigin("http://localhost:3000")
 public class MainController {
 final private GoodService goodService;
 
@@ -22,16 +24,13 @@ final private GoodService goodService;
 
 
     @GetMapping("/")
-    public String home(Model model) {
-    List<Good> goodList = goodService.getAllGoods();
-        model.addAttribute("goods", goodList);
-        model.addAttribute("title", "Main Page");
-        return "home";
+    public   List<Good> home() {
+      return goodService.getAllGoods();
     }
 
     @GetMapping("/about")
-    public String about(Model model) {
-        return "about";
+    public void about() {
+
     }
 
 }

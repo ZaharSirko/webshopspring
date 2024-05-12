@@ -11,11 +11,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.webshopspring.model.User;
 import com.example.webshopspring.service.TokenService;
@@ -27,7 +23,8 @@ import jakarta.validation.Valid;
 
 
 
-@Controller
+@RestController
+@CrossOrigin("http://localhost:3000")
 public class UserController {
     private final UserService userService;
     private final TokenService tokenService;
@@ -42,31 +39,18 @@ public class UserController {
     }
 
     @GetMapping("/sign-in")
-    public String registration(Model model) {
-        model.addAttribute("user", new User());
-
-        return "sign-in";
+    public User registration() {
+       return  new User();
     }
 
 
     @PostMapping("/sign-in")
-    public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
-
-        if (bindingResult.hasErrors()) {
-            return "sign-in";
-        }
-        if (!userService.saveUser(user)){
-            model.addAttribute("message", "User with this login has been created");
-            return "sign-in";
-        }
-
-        return "redirect:/";
+    public void addUser(@ModelAttribute("user") @Valid User user) {
     }
 
 
     @GetMapping("/log-in")
-    public String log_in() {
-        return "log-in";
+    public void log_in() {
     }
 
 
@@ -103,44 +87,22 @@ public class UserController {
 
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request,response, auth);
-        }
-        return "redirect:/";
+    public Authentication logout(HttpServletRequest request, HttpServletResponse response) {
+      return SecurityContextHolder.getContext().getAuthentication();
     }
 
     @GetMapping(value = "/profile/{email}")
-    public String getUserProfile(@PathVariable String email, Model model) {
-        User user = userService.getUserByEmail(email);
-        if (user != null) {
-            model.addAttribute("user", user);
-        } else {
-        }
-            return "user-profile"; 
+    public User getUserProfile(@PathVariable String email, Model model) {
+       return userService.getUserByEmail(email);
     }
 
     @GetMapping(value = "/profile/{email}/edit")
-    public String getUserProfileEdit(@PathVariable String email, Model model) {
-        User user = userService.getUserByEmail(email);
-        if (user != null) {
-            model.addAttribute("user", user);
-        } else {
-            return  "user-profile";
-        }
-            return "user-profile-edit"; 
+    public User getUserProfileEdit(@PathVariable String email) {
+       return userService.getUserByEmail(email);
     }
     @PostMapping("/profile/{email}/edit")
-    public String editUser(@PathVariable("email") String email, @ModelAttribute("updatedUser") User updatedUser) {
-        boolean isUpdated = userService.updateUser(email, updatedUser);
-
-        if (isUpdated) {
-            return "redirect:/profile/" + email;
-        } else {
- 
-            return "redirect:/error"; 
-        }
+    public boolean editUser(@PathVariable("email") String email, @ModelAttribute("updatedUser") User updatedUser) {
+       return userService.updateUser(email, updatedUser);
     }
 
 }

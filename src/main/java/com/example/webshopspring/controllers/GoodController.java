@@ -14,7 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-@Controller
+@RestController
+@CrossOrigin("http://localhost:3000")
 public class GoodController {
     public final GoodService goodService;
     public final PriceService priceService;
@@ -26,39 +27,25 @@ public class GoodController {
     }
 
     @GetMapping("/good/{id}")
-    public String getGoodById(@PathVariable("id") Long id, Model model) {
-        Good good = goodService.getGoodById(id);
-        if (good != null) {
-            model.addAttribute("good", good);
-            return "good-detail";
-        } else {
-            return "redirect:/";
-        }
+    public Good getGoodById(@PathVariable("id") Long id) {
+       return goodService.getGoodById(id);
     }
 
 
     @GetMapping("/good/add")
-    public String addNewGood(Model model) {
-        List<Price> price = priceService.getAllPrices();
-        model.addAttribute("good", new Good());
-        model.addAttribute("price",price);
-        return "good-add";
+    public List<Price> addNewGood() {
+        return   priceService.getAllPrices();
+//        model.addAttribute("good", new Good());
+//        model.addAttribute("price",price);
     }
 
     @PostMapping("/good/add")
-    public String addNewGood(@ModelAttribute Good newGood, BindingResult bindingResult,@RequestParam("imageFile") MultipartFile[] imageFile) throws IOException {
-
-        if (bindingResult.hasErrors()) {
-            return "redirect:/about";
-        }
-        else{
+    public Good addNewGood(@ModelAttribute Good newGood,@RequestParam("imageFile") MultipartFile[] imageFile) throws IOException {
             String[] photosPath = new String[imageFile.length];
             for (int i = 0; i < imageFile.length; i++) {
                 photosPath[i] = goodService.saveImage(imageFile[i]);
             }
-            goodService.addGood(newGood.getGoodName(), newGood.getGoodDescription(), newGood.getGoodBrand(),
+            return   goodService.addGood(newGood.getGoodName(), newGood.getGoodDescription(), newGood.getGoodBrand(),
                     photosPath,  newGood.getGoodPrice());
-            return "redirect:/";
-        }
     }
 }
