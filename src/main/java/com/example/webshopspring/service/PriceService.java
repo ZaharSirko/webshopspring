@@ -56,5 +56,4 @@ public class PriceService {
         good.setGoodPrice(price);
         goodRepository.save(good);
     }
-
 }

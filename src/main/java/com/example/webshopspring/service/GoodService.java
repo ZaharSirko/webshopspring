@@ -21,17 +21,13 @@ import java.util.UUID;
 @Service
 public class GoodService {
 private final GoodRepository  goodRepository;
-private final PriceRepository priceRepository;
-private final TypesRepository typesRepository;
 
     @Value("${upload.dir}")
     private String uploadDir;
 
 @Autowired
-public GoodService(GoodRepository goodRepository, PriceRepository priceRepository, TypesRepository typesRepository) {
+public GoodService(GoodRepository goodRepository) {
     this.goodRepository = goodRepository;
-    this.priceRepository = priceRepository;
-    this.typesRepository = typesRepository;
 }
 
 public  Good getGoodById(Long id) {
@@ -92,6 +88,4 @@ public boolean updateGood(Long id,Good good){
     private String generateUniqueFileName(String originalFileName) {
         return UUID.randomUUID().toString() + "_" + originalFileName;
     }
-
-
 }
