@@ -46,14 +46,14 @@ public List<Good> getAllGoods(){
     return goodRepository.findAll();
 }
 
-public Good addGood(String goodName, String goodDescription, String goodBrand, String[] goodPhoto,  Price goodPrice){
-
+public Good addGood(String goodName, String goodDescription, String goodBrand, String[] goodPhoto){
+//    Price goodPrice
     Good newGood = new Good();
     newGood.setGoodName(goodName);
     newGood.setGoodDescription(goodDescription);
     newGood.setGoodBrand(goodBrand);
     newGood.setGoodPhoto(goodPhoto);
-    newGood.setGoodPrice(goodPrice);
+//    newGood.setGoodPrice(goodPrice);
     newGood.setGoodLikes(0);
 
     return goodRepository.save(newGood);

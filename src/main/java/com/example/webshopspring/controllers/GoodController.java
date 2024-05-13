@@ -29,6 +29,8 @@ public class GoodController {
     public String getGoodById(@PathVariable("id") Long id, Model model) {
         Good good = goodService.getGoodById(id);
         if (good != null) {
+            Price price = priceService.getPriceForGoodId(good.getId());
+            model.addAttribute("price", price);
             model.addAttribute("good", good);
             return "good-detail";
         } else {
@@ -57,7 +59,8 @@ public class GoodController {
                 photosPath[i] = goodService.saveImage(imageFile[i]);
             }
             goodService.addGood(newGood.getGoodName(), newGood.getGoodDescription(), newGood.getGoodBrand(),
-                    photosPath,  newGood.getGoodPrice());
+                    photosPath);
+//            ,  newGood.getGoodPrice()
             return "redirect:/";
         }
     }

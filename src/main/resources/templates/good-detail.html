@@ -42,7 +42,7 @@
             <h5 class="card-title" th:text="${good.goodName}"></h5>
             <p class="card-text" th:text="${good.goodDescription}"></p>
             <p class="card-text"><strong>Brand:</strong> <span th:text="${good.goodBrand}"></span></p>
-            <p class="card-text"><strong>Price:</strong> $<span th:text="${good.goodPrice.getClient_price()}"></span></p>
+            <p class="card-text"><strong>Price:</strong> $<span th:text="${price.getClient_price()}"></span></p>
 
             <div sec:authorize="isAuthenticated()">
             <form th:action="@{|~/good/${good.getId()}|}" method="post">

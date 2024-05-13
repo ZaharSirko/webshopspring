@@ -24,11 +24,11 @@
                     <th:block th:each="cards : ${card}">
                         <tr>
                             <td>
-                                <img th:src="@{'~/' + ${card.good.goodPhoto[0]}}" alt="Good Image" style="max-width: 100px; max-height: 100px;">
+                                <img th:src="@{'~/' + ${card.price.good_id.goodPhoto[0]}}" alt="Good Image" style="max-width: 100px; max-height: 100px;">
                             </td>
-                            <td th:text="${card.good.goodName}" style="vertical-align: middle;"></td>
-                            <td th:text="${card.good.goodDescription}" style="vertical-align: middle;"></td>
-                            <td th:text="${card.good.goodPrice.getClient_price()}" style="vertical-align: middle;"></td>
+                            <td th:text="${card.price.good_id.goodName}" style="vertical-align: middle;"></td>
+                            <td th:text="${card.price.good_id.goodDescription}" style="vertical-align: middle;"></td>
+                            <td th:text="${card.price.getClient_price()}" style="vertical-align: middle;"></td>
                             <td style="vertical-align: middle;">
                                 <form th:action="@{'/card/' + ${#authentication.name} + '/cancel/'+ ${card.id}}" method="post">
                                     <button type="submit" class="btn btn-danger">Cancel</button>
