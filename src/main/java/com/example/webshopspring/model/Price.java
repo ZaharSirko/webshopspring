@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -48,6 +50,8 @@ public class Price {
     @Column(name = "deleted_at")
     private Date deleted_at;
 
+    @OneToMany(mappedBy = "price", cascade = CascadeType.ALL)
+    private Set<Card> price = new HashSet<>();
 
     public long getId() {
         return id;

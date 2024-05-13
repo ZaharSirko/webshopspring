@@ -29,6 +29,10 @@ public class GoodController {
     @GetMapping("/good/{id}")
     public Good getGoodById(@PathVariable("id") Long id) {
        return goodService.getGoodById(id);
+//        Good good = goodService.getGoodById(id);
+////        if (good != null) {
+////            return  priceService.getPriceForGoodId(good.getId());
+////        }
     }
 
 
@@ -46,6 +50,6 @@ public class GoodController {
                 photosPath[i] = goodService.saveImage(imageFile[i]);
             }
             return   goodService.addGood(newGood.getGoodName(), newGood.getGoodDescription(), newGood.getGoodBrand(),
-                    photosPath,  newGood.getGoodPrice());
+                    photosPath);
     }
 }

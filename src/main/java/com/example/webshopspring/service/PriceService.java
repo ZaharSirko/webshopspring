@@ -11,12 +11,8 @@ import java.util.List;
 @Service
 public class PriceService {
     final private PriceRepository priceRepository;
-    final private GoodRepository goodRepository;
-    final private GoodService goodService;
-    public PriceService(PriceRepository priceRepository, GoodRepository goodRepository, GoodService goodService) {
+    public PriceService(PriceRepository priceRepository) {
         this.priceRepository = priceRepository;
-        this.goodRepository = goodRepository;
-        this.goodService = goodService;
     }
     public Price getPriceById(Long id) {
         return priceRepository.finById(id).orElse(null);
@@ -27,16 +23,25 @@ public class PriceService {
     }
     public void addPrice(Price price) {
         priceRepository.save(price);
-        setGoodPrice(price);
+//        setGoodPrice(price);
     }
     public  boolean savePrice(Price price) {
         Price priceFromDb = priceRepository.findById(price.getId()).orElse(null);
         if (priceFromDb == null) {
             return false;
         }
-         priceRepository.save(price);
+        priceRepository.save(price);
         return true;
     }
+
+    public Price getPriceForGoodId(Long id) {
+        return priceRepository.findPriceForGoodId(id).orElse(null);
+    }
+
+    public List<Price> getAllPriceForGood(Good good) {
+        return  priceRepository.findByGood(good);
+    }
+
     public  boolean updatePrice(Long id, Price updatedPrice) {
         Price existingPrice = getPriceById(id);
         if (existingPrice != null) {
@@ -45,15 +50,16 @@ public class PriceService {
             existingPrice.setBought_amount(updatedPrice.getBought_amount());
             existingPrice.setGood_id(updatedPrice.getGood_id());
             priceRepository.save(existingPrice);
-            setGoodPrice(existingPrice);
+//            setGoodPrice(existingPrice);
             return  true;
         }
         return  false;
     }
+//
+//    public void setGoodPrice(Price price){
+//        Good good =  goodService.getGoodById(price.getGood_id().getId());
+//        good.setGoodPrice(price);
+//        goodRepository.save(good);
+//    }
 
-    public void setGoodPrice(Price price){
-        Good good =  goodService.getGoodById(price.getGood_id().getId());
-        good.setGoodPrice(price);
-        goodRepository.save(good);
-    }
 }

@@ -24,10 +24,16 @@ public class Card {
     @JoinColumn(name = "user_id")
     private User user;
 
+//    @NotNull
+//    @ManyToOne
+//    @JoinColumn(name = "good_id")
+//    private Good good;
+
+
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "good_id")
-    private Good good;
+    @JoinColumn(name = "price_id")
+    private Price price;
 
     public Long getId() {
         return id;
@@ -45,11 +51,19 @@ public class Card {
         this.user = user;
     }
 
-    public Good getGood() {
-        return good;
+    public Price getPrice() {
+        return price;
     }
 
-    public void setGood(Good good) {
-        this.good = good;
+    public void setPrice(Price price) {
+        this.price = price;
     }
+
+//    public Good getGood() {
+//        return good;
+//    }
+//
+//    public void setGood(Good good) {
+//        this.good = good;
+//    }
 }

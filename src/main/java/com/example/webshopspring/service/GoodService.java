@@ -20,57 +20,57 @@ import java.util.UUID;
 
 @Service
 public class GoodService {
-private final GoodRepository  goodRepository;
+    private final GoodRepository  goodRepository;
 
     @Value("${upload.dir}")
     private String uploadDir;
 
-@Autowired
-public GoodService(GoodRepository goodRepository) {
-    this.goodRepository = goodRepository;
-}
+    @Autowired
+    public GoodService(GoodRepository goodRepository) {
+        this.goodRepository = goodRepository;
+    }
 
-public  Good getGoodById(Long id) {
-    return goodRepository.findById(id).orElse(null);
-}
+    public  Good getGoodById(Long id) {
+        return goodRepository.findById(id).orElse(null);
+    }
 
-public Good getGoodByName(String name){
- return   goodRepository.findByGoodName(name).orElse(null);
-}
+    public Good getGoodByName(String name){
+        return   goodRepository.findByGoodName(name).orElse(null);
+    }
 
-public List<Good> getAllGoods(){
-    return goodRepository.findAll();
-}
+    public List<Good> getAllGoods(){
+        return goodRepository.findAll();
+    }
 
-public Good addGood(String goodName, String goodDescription, String goodBrand, String[] goodPhoto,  Price goodPrice){
+    public Good addGood(String goodName, String goodDescription, String goodBrand, String[] goodPhoto){
+//    Price goodPrice
+        Good newGood = new Good();
+        newGood.setGoodName(goodName);
+        newGood.setGoodDescription(goodDescription);
+        newGood.setGoodBrand(goodBrand);
+        newGood.setGoodPhoto(goodPhoto);
+//    newGood.setGoodPrice(goodPrice);
+        newGood.setGoodLikes(0);
 
-    Good newGood = new Good();
-    newGood.setGoodName(goodName);
-    newGood.setGoodDescription(goodDescription);
-    newGood.setGoodBrand(goodBrand);
-    newGood.setGoodPhoto(goodPhoto);
-    newGood.setGoodPrice(goodPrice);
-    newGood.setGoodLikes(0);
+        return goodRepository.save(newGood);
+    }
 
-    return goodRepository.save(newGood);
-}
+    public Good addGood(Good good){
+        return goodRepository.save(good);
+    }
 
-public Good addGood(Good good){
-    return goodRepository.save(good);
-}
-
-public  boolean deleteGood(Good good){
-    return  true;
-}
-public boolean updateGood(Long id,Good good){
-    Good existingGood = getGoodById(id);
-    if(existingGood != null){
-
-
+    public  boolean deleteGood(Good good){
         return  true;
     }
-    return false;
-}
+    public boolean updateGood(Long id,Good good){
+        Good existingGood = getGoodById(id);
+        if(existingGood != null){
+
+
+            return  true;
+        }
+        return false;
+    }
 
     public String saveImage(MultipartFile imageFile) throws IOException {
         if (imageFile != null && !imageFile.isEmpty()) {
@@ -88,4 +88,6 @@ public boolean updateGood(Long id,Good good){
     private String generateUniqueFileName(String originalFileName) {
         return UUID.randomUUID().toString() + "_" + originalFileName;
     }
+
+
 }
