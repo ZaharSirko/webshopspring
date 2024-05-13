@@ -14,7 +14,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
-@PasswordMatches
+//@PasswordMatches
 public class User implements UserDetails  {
     @Id
     @SequenceGenerator(
