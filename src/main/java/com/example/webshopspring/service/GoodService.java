@@ -59,10 +59,6 @@ public Good addGood(String goodName, String goodDescription, String goodBrand, S
     return goodRepository.save(newGood);
 }
 
-public Good addGood(Good good){
-    return goodRepository.save(good);
-}
-
 public  boolean deleteGood(Good good){
     return  true;
 }
@@ -74,6 +70,16 @@ public boolean updateGood(Long id,Good good){
         return  true;
     }
     return false;
+}
+
+public int setLikes(Long id){
+    Good existingGood = getGoodById(id);
+    if(existingGood != null){
+         existingGood.setGoodLikes(existingGood.getGoodLikes()+1);
+        goodRepository.save(existingGood);
+        return existingGood.getGoodLikes();
+    }
+    return 0;
 }
 
     public String saveImage(MultipartFile imageFile) throws IOException {

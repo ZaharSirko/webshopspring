@@ -5,6 +5,7 @@ import com.example.webshopspring.model.Price;
 import com.example.webshopspring.service.GoodService;
 import com.example.webshopspring.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class GoodController {
@@ -37,6 +40,7 @@ public class GoodController {
             return "redirect:/";
         }
     }
+
 
 
     @GetMapping("/good/add")
@@ -64,4 +68,25 @@ public class GoodController {
             return "redirect:/";
         }
     }
+
+//    @PostMapping("/like/{id}")
+//    public ResponseEntity<Map<String, Integer>> likeGood(@PathVariable Long id) {
+//        int newLikesCount = goodService.setLikes(id);
+//        Map<String, Integer> response = new HashMap<>();
+//        response.put("likes", newLikesCount);
+//        return ResponseEntity.ok(response);
+//    }
+
+    @GetMapping("/like/{goodId}")
+    public String asd(@PathVariable("goodId") Long goodId){
+        //  goodService.setLikes(goodId);
+        return "redirect:/about";
+    }
+
+    @PostMapping("/like/{goodId}")
+    public String setLike(@PathVariable("goodId") Long goodId){
+         goodService.setLikes(goodId);
+        return "redirect:/about";
+    }
+
 }

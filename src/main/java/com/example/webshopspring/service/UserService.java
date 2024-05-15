@@ -30,10 +30,13 @@ import jakarta.persistence.PersistenceContext;
 public class UserService implements UserDetailsService  {
     @PersistenceContext
     private EntityManager em;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    RoleRepository roleRepository;
+    final private UserRepository userRepository;
+    final private RoleRepository roleRepository;
+
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @Bean
    public PasswordEncoder encoder() {

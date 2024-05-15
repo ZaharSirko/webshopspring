@@ -38,7 +38,7 @@ final private PriceService priceService;
         model.addAttribute("goods", goodList);
         model.addAttribute("goodPrice", goodPriceMap);
         model.addAttribute("title", "Main Page");
-        return "home";
+        return "home2";
     }
 
     @GetMapping("/about")

@@ -11,12 +11,8 @@ import java.util.List;
 @Service
 public class PriceService {
     final private PriceRepository priceRepository;
-    final private GoodRepository goodRepository;
-    final private GoodService goodService;
-    public PriceService(PriceRepository priceRepository, GoodRepository goodRepository, GoodService goodService) {
+    public PriceService(PriceRepository priceRepository) {
         this.priceRepository = priceRepository;
-        this.goodRepository = goodRepository;
-        this.goodService = goodService;
     }
     public Price getPriceById(Long id) {
         return priceRepository.finById(id).orElse(null);

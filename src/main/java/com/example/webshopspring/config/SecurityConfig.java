@@ -34,6 +34,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 
 @Configuration
@@ -79,7 +80,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,  OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2LoginHandler) throws Exception {
-        http
+        http.csrf(csrf -> csrf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
             .authorizeHttpRequests((authz) -> authz
                 .requestMatchers("/**").permitAll()
                 .anyRequest().authenticated()
@@ -93,7 +95,7 @@ public class SecurityConfig {
             .loginPage("/log-in")
             .defaultSuccessUrl("/", true)
             .permitAll())
-            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)  
+            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
             .logout((logout) -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
