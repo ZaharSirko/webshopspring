@@ -28,6 +28,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
+import java.security.Principal;
 
 
 @RestController
@@ -84,7 +85,7 @@ public class UserController {
         String password = loginRequest.getPassword();
 
         System.out.println(username+"-------"+password);
-
+        try {
         Authentication authentication = authenticate(username,password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -96,6 +97,12 @@ public class UserController {
         authResponse.setStatus(true);
 
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            AuthResponse authResponse = new AuthResponse();
+            authResponse.setMessage("Login failed: " + e.getMessage());
+            authResponse.setStatus(false);
+            return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
+        }
     }
 
 
@@ -161,10 +168,13 @@ public class UserController {
       return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    @GetMapping(value = "/profile/{email}")
-    public User getUserProfile(@PathVariable String email, Model model) {
-       return userService.getUserByEmail(email);
+    @GetMapping("/profile")
+    public ResponseEntity<User> getProfile(Principal principal) {
+        String username = principal.getName();
+        User user = userService.getUserByEmail(username);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
 
     @GetMapping(value = "/profile/{email}/edit")
     public User getUserProfileEdit(@PathVariable String email) {
