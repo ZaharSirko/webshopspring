@@ -7,32 +7,24 @@ import com.example.webshopspring.response.AuthResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.webshopspring.model.User;
-import com.example.webshopspring.service.TokenService;
 import com.example.webshopspring.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 
 import java.security.Principal;
 
 
 @RestController
-@CrossOrigin("http://localhost:3000")
 public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
@@ -107,7 +99,6 @@ public class UserController {
 
 
 
-
     private Authentication authenticate(String username, String password) {
 
         System.out.println(username+"---++----"+password);
@@ -117,7 +108,7 @@ public class UserController {
         System.out.println("Sig in in user details"+ userDetails);
 
         if(userDetails == null) {
-            System.out.println("Sign in details - null" + userDetails);
+            System.out.println("Sign in details - null");
 
             throw new BadCredentialsException("Invalid username and password");
         }
@@ -130,38 +121,6 @@ public class UserController {
         return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
 
     }
-
-//	record LoginRequest(String username, String password) {};
-//	record LoginResponse(String message, String access_jwt_token, String refresh_jwt_token) {};
-//	@PostMapping("/log-in")
-//	public LoginResponse login(@RequestBody LoginRequest request) {
-//
-//		UsernamePasswordAuthenticationToken authenticationToken =
-//				new UsernamePasswordAuthenticationToken(request.username, request.password);
-//		Authentication auth = authManager.authenticate(authenticationToken);
-//
-//		User user = (User) userService.loadUserByUsername(request.username);
-//		String access_token = tokenService.generateAccessToken(user);
-//		String refresh_token = tokenService.generateRefreshToken(user);
-//
-//		return new LoginResponse("User with email = "+ request.username + " successfully logined!"
-//
-//				, access_token, refresh_token);
-//	}
-//	record RefreshTokenResponse(String access_jwt_token, String refresh_jwt_token) {};
-//	@GetMapping("/token/refresh")
-//	public RefreshTokenResponse refreshToken(HttpServletRequest request) {
-//		 String headerAuth = request.getHeader("Authorization");
-//		 String refreshToken = headerAuth.substring(7, headerAuth.length());
-//
-//		String email = tokenService.parseToken(refreshToken);
-//		User user = (User) userService.loadUserByUsername(email);
-//		String access_token = tokenService.generateAccessToken(user);
-//		String refresh_token = tokenService.generateRefreshToken(user);
-//
-//		return new RefreshTokenResponse(access_token, refresh_token);
-//	}
-
 
     @GetMapping("/logout")
     public Authentication logout(HttpServletRequest request, HttpServletResponse response) {
