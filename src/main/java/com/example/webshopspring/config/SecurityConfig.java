@@ -77,6 +77,9 @@ public class SecurityConfig {
 //            .loginPage("/log-in")
 //            .defaultSuccessUrl("/", true)
 //            .permitAll())
+                .oauth2ResourceServer(
+                        OAuth2ResourceServerConfigurer::jwt
+                )
             .logout((logout) -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
