@@ -73,13 +73,13 @@ public class SecurityConfig {
 //                .defaultSuccessUrl("/", true)
 //                .permitAll()
 //            )
-//            .oauth2Login(oc -> oc
-//            .loginPage("/log-in")
-//            .defaultSuccessUrl("/", true)
-//            .permitAll())
-                .oauth2ResourceServer(
-                        OAuth2ResourceServerConfigurer::jwt
-                )
+            .oauth2Login(oc -> oc
+            .loginPage("/log-in")
+            .defaultSuccessUrl("http://localhost:3000/", true)
+            .permitAll())
+//                .oauth2ResourceServer(
+//                        OAuth2ResourceServerConfigurer::jwt
+//                )
             .logout((logout) -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
