@@ -28,10 +28,10 @@ public class CardController {
        return cardService.getCardByUserEmail(userEmail);
     }
 
- @PostMapping("/good/{id}")
-    public boolean addGoodToUserCard(@PathVariable("id") Long id, Principal principal) {
-       return  cardService.addGoodToUserCard(id, principal.getName());
- }
+// @PostMapping("/good/{id}")
+//    public boolean addGoodToUserCard(@PathVariable("id") Long id, Principal principal) {
+//       return  cardService.addGoodToUserCard(id, principal.getName());
+// }
 
     @PostMapping(value = "/card/{userName}/cancel/{cardId}")
     public void cancelTourReservation( @PathVariable String userName,@PathVariable Long cardId ) {

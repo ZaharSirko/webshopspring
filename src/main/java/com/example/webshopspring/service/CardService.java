@@ -28,19 +28,19 @@ public class CardService {
         return cardRepository.findCardByUserEmail(email).orElse(null);
     }
 
-    public boolean addGoodToUserCard(Long id, String userEmail){
-        Good good = goodService.getGoodById(id);
-        Price price = priceService.getPriceForGoodId(good.getId());
-        User user =userService.getUserByEmail(userEmail);
-        if (user != null){
-            Card newCard = new Card();
-            newCard.setUser(user);
-            newCard.setPrice(price);
-            cardRepository.save(newCard);
-            return true;
-        }
-        return false;
-    }
+//    public boolean addGoodToUserCard(Long id, String userEmail){
+//        Good good = goodService.getGoodById(id);
+//        Price price = priceService.getPriceForGoodId(good.getId());
+//        User user =userService.getUserByEmail(userEmail);
+//        if (user != null){
+//            Card newCard = new Card();
+//            newCard.setUser(user);
+//            newCard.setPrice(price);
+//            cardRepository.save(newCard);
+//            return true;
+//        }
+//        return false;
+//    }
     @Transactional
     public void removeGoodFromUserCard(Long id){
         cardRepository.deleteGoodFromUserCard(id);
