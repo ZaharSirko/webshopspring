@@ -1,5 +1,7 @@
 package com.example.webshopspring.service;
 
+import com.example.webshopspring.DTO.GoodWithPriceDTO;
+import com.example.webshopspring.DTO.mapper.GoodWithPriceMapper;
 import com.example.webshopspring.model.Good;
 import com.example.webshopspring.model.Price;
 import com.example.webshopspring.repo.GoodRepository;
@@ -15,19 +17,26 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class GoodService {
     private final GoodRepository  goodRepository;
+    private final GoodWithPriceMapper goodWithPriceMapper;
+    private final PriceService priceService;
 
     @Value("${upload.dir}")
     private String uploadDir;
 
-    @Autowired
-    public GoodService(GoodRepository goodRepository) {
+
+    public GoodService(GoodRepository goodRepository, GoodWithPriceMapper goodWithPriceMapper, PriceService priceService) {
         this.goodRepository = goodRepository;
+        this.goodWithPriceMapper = goodWithPriceMapper;
+        this.priceService = priceService;
     }
 
     public  Good getGoodById(Long id) {
@@ -38,18 +47,18 @@ public class GoodService {
         return   goodRepository.findByGoodName(name).orElse(null);
     }
 
-    public List<Good> getAllGoods(){
-        return goodRepository.findAll();
+    public List<GoodWithPriceDTO> getAllGoodsWithPrices() {
+        List<Good> goods = goodRepository.findAll();
+        Map<Long, Price> priceMap = priceService.getPricesMappedByGoodId();
+        return GoodWithPriceMapper.toDTOList(goods, priceMap);
     }
 
     public Good addGood(String goodName, String goodDescription, String goodBrand, String[] goodPhoto){
-//    Price goodPrice
         Good newGood = new Good();
         newGood.setGoodName(goodName);
         newGood.setGoodDescription(goodDescription);
         newGood.setGoodBrand(goodBrand);
         newGood.setGoodPhoto(goodPhoto);
-//    newGood.setGoodPrice(goodPrice);
         newGood.setGoodLikes(0);
 
         return goodRepository.save(newGood);

@@ -7,6 +7,8 @@ import com.example.webshopspring.repo.PriceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class PriceService {
@@ -23,7 +25,6 @@ public class PriceService {
     }
     public void addPrice(Price price) {
         priceRepository.save(price);
-//        setGoodPrice(price);
     }
     public  boolean savePrice(Price price) {
         Price priceFromDb = priceRepository.findById(price.getId()).orElse(null);
@@ -32,6 +33,10 @@ public class PriceService {
         }
         priceRepository.save(price);
         return true;
+    }
+    public Map<Long, Price> getPricesMappedByGoodId() {
+        List<Price> prices = getAllPrices();
+        return prices.stream().collect(Collectors.toMap(price -> price.getGood_id().getId(), price -> price));
     }
 
     public Price getPriceForGoodId(Long id) {
@@ -50,16 +55,10 @@ public class PriceService {
             existingPrice.setBought_amount(updatedPrice.getBought_amount());
             existingPrice.setGood_id(updatedPrice.getGood_id());
             priceRepository.save(existingPrice);
-//            setGoodPrice(existingPrice);
             return  true;
         }
         return  false;
     }
-//
-//    public void setGoodPrice(Price price){
-//        Good good =  goodService.getGoodById(price.getGood_id().getId());
-//        good.setGoodPrice(price);
-//        goodRepository.save(good);
-//    }
+
 
 }
