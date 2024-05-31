@@ -1,5 +1,8 @@
 package com.example.webshopspring.service;
 
+import com.example.webshopspring.DTO.UserDTO;
+import com.example.webshopspring.DTO.mapper.UserMapper;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 
@@ -96,8 +99,9 @@ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundExcep
         };
     }
 
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
+    public UserDTO getUserByEmail(String email) {
+         User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return UserMapper.toUserDTO(user);
     }
 
     public boolean deleteUser(Long userId) {

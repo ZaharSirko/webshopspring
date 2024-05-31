@@ -2,6 +2,7 @@ package com.example.webshopspring.controllers;
 
 
 
+import com.example.webshopspring.DTO.UserDTO;
 import com.example.webshopspring.config.JwtProvider;
 import com.example.webshopspring.response.AuthResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -56,7 +57,7 @@ public class UserController {
         String email = user.getEmail();
         String password = user.getPassword();
 
-        User isEmailExist = userService.getUserByEmail(email);
+        UserDTO isEmailExist = userService.getUserByEmail(email);
         if (isEmailExist != null) {
             throw new Exception("Email Is Already Used With Another Account");
         }
@@ -110,43 +111,43 @@ public class UserController {
     private static final HttpTransport transport = new NetHttpTransport();
     private static final JsonFactory jsonFactory = new JacksonFactory();
     
-    @PostMapping("/oauth2/authorization/google")
-    public ResponseEntity<?> googleLogin(@RequestBody Map<String, String> payload) {
-        String googletoken = payload.get("token");
-        GoogleIdToken idToken = null;
-        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-                .setAudience(Collections.singletonList(CLIENT_ID))
-                .build();
-        try {
-            idToken =  verifier.verify(googletoken);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        GoogleIdToken.Payload googlePayload = idToken.getPayload();
-        String email = googlePayload.getEmail();
-        
-        try {
-            User user = userService.getUserByEmail(email);
-            Authentication authentication = authenticate(user.getEmail(),user.getPassword());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            String token = JwtProvider.generateToken(authentication);
-            AuthResponse authResponse = new AuthResponse();
-
-            authResponse.setMessage("Login success");
-            authResponse.setJwt(token);
-            authResponse.setStatus(true);
-
-            return new ResponseEntity<>(authResponse, HttpStatus.OK);
-        } catch (Exception e) {
-            AuthResponse authResponse = new AuthResponse();
-            authResponse.setMessage("Login failed: " + e.getMessage());
-            authResponse.setStatus(false);
-            return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
-        }
-        
-    }
+//    @PostMapping("/oauth2/authorization/google")
+//    public ResponseEntity<AuthResponse> googleLogin(@RequestBody Map<String, String> payload) {
+//        String googletoken = payload.get("token");
+//        GoogleIdToken idToken = null;
+//        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+//                .setAudience(Collections.singletonList(CLIENT_ID))
+//                .build();
+//        try {
+//            idToken =  verifier.verify(googletoken);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//        }
+//
+//        GoogleIdToken.Payload googlePayload = idToken.getPayload();
+//        String email = googlePayload.getEmail();
+//
+//        try {
+//            UserDTO user = userService.getUserByEmail(email);
+//            Authentication authentication = authenticate(user.getEmail(),user.getPassword());
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//            String token = JwtProvider.generateToken(authentication);
+//            AuthResponse authResponse = new AuthResponse();
+//
+//            authResponse.setMessage("Login success");
+//            authResponse.setJwt(token);
+//            authResponse.setStatus(true);
+//
+//            return new ResponseEntity<>(authResponse, HttpStatus.OK);
+//        } catch (Exception e) {
+//            AuthResponse authResponse = new AuthResponse();
+//            authResponse.setMessage("Login failed: " + e.getMessage());
+//            authResponse.setStatus(false);
+//            return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
+//        }
+//
+//    }
 
 
     private Authentication authenticate(String username, String password) {
@@ -178,17 +179,17 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<User> getProfile(Principal principal) {
+    public ResponseEntity<UserDTO> getProfile(Principal principal) {
         String username = principal.getName();
-        User user = userService.getUserByEmail(username);
+        UserDTO user = userService.getUserByEmail(username);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 
-    @GetMapping(value = "/profile/{email}/edit")
-    public User getUserProfileEdit(@PathVariable String email) {
-       return userService.getUserByEmail(email);
-    }
+//    @GetMapping(value = "/profile/{email}/edit")
+//    public User getUserProfileEdit(@PathVariable String email) {
+//       return userService.getUserByEmail(email);
+//    }
     @PostMapping("/profile/{email}/edit")
     public boolean editUser(@PathVariable("email") String email, @ModelAttribute("updatedUser") User updatedUser) {
        return userService.updateUser(email, updatedUser);
