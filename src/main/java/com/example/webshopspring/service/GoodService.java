@@ -1,10 +1,7 @@
 package com.example.webshopspring.service;
 
 import com.example.webshopspring.model.Good;
-import com.example.webshopspring.model.Price;
 import com.example.webshopspring.repo.GoodRepository;
-import com.example.webshopspring.repo.PriceRepository;
-import com.example.webshopspring.repo.TypesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,17 +18,13 @@ import java.util.UUID;
 @Service
 public class GoodService {
 private final GoodRepository  goodRepository;
-private final PriceRepository priceRepository;
-private final TypesRepository typesRepository;
 
     @Value("${upload.dir}")
     private String uploadDir;
 
 @Autowired
-public GoodService(GoodRepository goodRepository, PriceRepository priceRepository, TypesRepository typesRepository) {
+public GoodService(GoodRepository goodRepository) {
     this.goodRepository = goodRepository;
-    this.priceRepository = priceRepository;
-    this.typesRepository = typesRepository;
 }
 
 public  Good getGoodById(Long id) {
@@ -47,30 +40,16 @@ public List<Good> getAllGoods(){
 }
 
 public Good addGood(String goodName, String goodDescription, String goodBrand, String[] goodPhoto){
-//    Price goodPrice
     Good newGood = new Good();
     newGood.setGoodName(goodName);
     newGood.setGoodDescription(goodDescription);
     newGood.setGoodBrand(goodBrand);
     newGood.setGoodPhoto(goodPhoto);
-//    newGood.setGoodPrice(goodPrice);
     newGood.setGoodLikes(0);
 
     return goodRepository.save(newGood);
 }
 
-public  boolean deleteGood(Good good){
-    return  true;
-}
-public boolean updateGood(Long id,Good good){
-    Good existingGood = getGoodById(id);
-    if(existingGood != null){
-
-
-        return  true;
-    }
-    return false;
-}
 
 public int setLikes(Long id){
     Good existingGood = getGoodById(id);

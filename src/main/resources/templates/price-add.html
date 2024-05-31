@@ -14,7 +14,7 @@
             <label >Good:</label>
             <select class="form-control" th:field="*{good_id}">
                 <th:block th:each="goods : ${good}">
-                    <option th:if="${goods.goodPrice==null}" th:value="${goods.id}" th:text="${goods.goodName} + ' (Good Name), ' + ${goods.goodBrand} + ' (Good Brand)'"></option>
+                    <option  th:value="${goods.id}" th:text="${goods.goodName} + ' (Good Name), ' + ${goods.goodBrand} + ' (Good Brand)'"></option>
                 </th:block>
             </select>
         </div>

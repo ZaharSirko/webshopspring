@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,13 +22,11 @@ import com.example.webshopspring.model.Role;
 import com.example.webshopspring.model.User;
 import com.example.webshopspring.repo.RoleRepository;
 import com.example.webshopspring.repo.UserRepository;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @Service
 public class UserService implements UserDetailsService  {
-    @PersistenceContext
-    private EntityManager em;
+
     final private UserRepository userRepository;
     final private RoleRepository roleRepository;
 

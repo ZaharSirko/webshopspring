@@ -49,61 +49,61 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
         this.rsaKeys=rsaKeys;
-        
-    }    
-    
+
+    }
+
     @Bean
-	public AuthenticationManager authManager() {
+    public AuthenticationManager authManager() {
         var authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return new ProviderManager(authProvider);
-	}
+    }
 
     @Bean
-	JwtEncoder jwtEncoder() {
-		JWK jwk = new RSAKey.Builder(rsaKeys.publicKey()).privateKey(rsaKeys.privateKey()).build();
-		JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(new JWKSet(jwk));
-		return new NimbusJwtEncoder(jwkSource);
-	}
-    
-	@Bean
-	JwtDecoder jwtDecoder() {
-		return NimbusJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
-	}
-	
-	@Bean
-	TokenService tokenService() {
-		return new TokenService(jwtEncoder());
-	}
-	
+    JwtEncoder jwtEncoder() {
+        JWK jwk = new RSAKey.Builder(rsaKeys.publicKey()).privateKey(rsaKeys.privateKey()).build();
+        JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(new JWKSet(jwk));
+        return new NimbusJwtEncoder(jwkSource);
+    }
+
+    @Bean
+    JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withPublicKey(rsaKeys.publicKey()).build();
+    }
+
+    @Bean
+    TokenService tokenService() {
+        return new TokenService(jwtEncoder());
+    }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,  OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2LoginHandler) throws Exception {
         http.csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-            .authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .formLogin((form) -> form
-                .loginPage("/log-in")
-                .defaultSuccessUrl("/", true)
-                .permitAll()
-            )
-            .oauth2Login(oc -> oc
-            .loginPage("/log-in")
-            .defaultSuccessUrl("/", true)
-            .permitAll())
-            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-            .logout((logout) -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll()
-            );
-     
+                .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin((form) -> form
+                        .loginPage("/log-in")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll()
+                )
+                .oauth2Login(oc -> oc
+                        .loginPage("/log-in")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll())
+                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                .logout((logout) -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                );
+
 
 
         return http.build();

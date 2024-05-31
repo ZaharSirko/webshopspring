@@ -21,17 +21,9 @@ public class PriceService {
     public List<Price> getAllPrices() {
         return priceRepository.findAll();
     }
+
     public void addPrice(Price price) {
         priceRepository.save(price);
-//        setGoodPrice(price);
-    }
-    public  boolean savePrice(Price price) {
-        Price priceFromDb = priceRepository.findById(price.getId()).orElse(null);
-        if (priceFromDb == null) {
-            return false;
-        }
-         priceRepository.save(price);
-        return true;
     }
 
     public Price getPriceForGoodId(Long id) {
@@ -50,16 +42,10 @@ public class PriceService {
             existingPrice.setBought_amount(updatedPrice.getBought_amount());
             existingPrice.setGood_id(updatedPrice.getGood_id());
             priceRepository.save(existingPrice);
-//            setGoodPrice(existingPrice);
             return  true;
         }
         return  false;
     }
-//
-//    public void setGoodPrice(Price price){
-//        Good good =  goodService.getGoodById(price.getGood_id().getId());
-//        good.setGoodPrice(price);
-//        goodRepository.save(good);
-//    }
+
 
 }

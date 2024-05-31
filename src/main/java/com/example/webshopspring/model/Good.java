@@ -3,8 +3,6 @@ package com.example.webshopspring.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "goods")
@@ -40,14 +38,6 @@ public class Good {
 
     @Column(name = "good_likes")
     private int goodLikes;
-
-//
-//    @ManyToOne
-//    @JoinColumn(name = "price_id")
-//    private Price goodPrice;
-
-//    @OneToMany(mappedBy = "good", cascade = CascadeType.ALL)
-//    private Set<Card> good = new HashSet<>();
 
 
     public Good(long id, String goodName, String goodDescription, String goodBrand, String[] goodPhoto, int goodLikes) {
@@ -110,12 +100,4 @@ public class Good {
     public void setGoodLikes(int goodLikes) {
         this.goodLikes = goodLikes;
     }
-
-//    public Price getGoodPrice() {
-//        return goodPrice;
-//    }
-//
-//    public void setGoodPrice(Price goodPrice) {
-//        this.goodPrice = goodPrice;
-//    }
 }

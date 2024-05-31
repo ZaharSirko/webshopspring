@@ -42,7 +42,6 @@ public class GoodController {
     }
 
 
-
     @GetMapping("/good/add")
     public String addNewGood(Model model) {
         List<Price> price = priceService.getAllPrices();
@@ -64,10 +63,20 @@ public class GoodController {
             }
             goodService.addGood(newGood.getGoodName(), newGood.getGoodDescription(), newGood.getGoodBrand(),
                     photosPath);
-//            ,  newGood.getGoodPrice()
             return "redirect:/";
         }
     }
+
+
+    @PostMapping("/like/{goodId}")
+    public String setLike(@PathVariable("goodId") Long goodId){
+         goodService.setLikes(goodId);
+        return "redirect:/about";
+    }
+
+
+}
+
 
 //    @PostMapping("/like/{id}")
 //    public ResponseEntity<Map<String, Integer>> likeGood(@PathVariable Long id) {
@@ -76,17 +85,3 @@ public class GoodController {
 //        response.put("likes", newLikesCount);
 //        return ResponseEntity.ok(response);
 //    }
-
-    @GetMapping("/like/{goodId}")
-    public String asd(@PathVariable("goodId") Long goodId){
-        //  goodService.setLikes(goodId);
-        return "redirect:/about";
-    }
-
-    @PostMapping("/like/{goodId}")
-    public String setLike(@PathVariable("goodId") Long goodId){
-         goodService.setLikes(goodId);
-        return "redirect:/about";
-    }
-
-}
