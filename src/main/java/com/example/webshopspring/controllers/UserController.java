@@ -4,6 +4,7 @@ package com.example.webshopspring.controllers;
 
 import com.example.webshopspring.DTO.UserDTO;
 import com.example.webshopspring.config.JwtProvider;
+import com.example.webshopspring.model.Role;
 import com.example.webshopspring.response.AuthResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
@@ -185,14 +186,20 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @GetMapping("/profile/status")
+    public ResponseEntity<Boolean> getStatus(Principal principal) {
+        String username = principal.getName();
+        if (username != null) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+    }
 
-//    @GetMapping(value = "/profile/{email}/edit")
-//    public User getUserProfileEdit(@PathVariable String email) {
-//       return userService.getUserByEmail(email);
-//    }
-    @PostMapping("/profile/{email}/edit")
-    public boolean editUser(@PathVariable("email") String email, @ModelAttribute("updatedUser") User updatedUser) {
-       return userService.updateUser(email, updatedUser);
+    @PutMapping("/profile/edit")
+    public ResponseEntity<Boolean> editUser( Principal principal, @RequestBody User updatedUser) {
+        String username = principal.getName();
+       boolean isupdated = userService.updateUser(username, updatedUser);
+        return new ResponseEntity<>(isupdated, HttpStatus.OK);
     }
 
 }
