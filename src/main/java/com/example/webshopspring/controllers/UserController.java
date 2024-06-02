@@ -4,14 +4,7 @@ package com.example.webshopspring.controllers;
 
 import com.example.webshopspring.DTO.UserDTO;
 import com.example.webshopspring.config.JwtProvider;
-import com.example.webshopspring.model.Role;
 import com.example.webshopspring.response.AuthResponse;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,19 +14,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
-
 import com.example.webshopspring.model.User;
 import com.example.webshopspring.service.UserService;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Map;
 
-import static org.springframework.security.oauth2.common.util.OAuth2Utils.CLIENT_ID;
 
 
 @RestController
@@ -108,47 +96,6 @@ public class UserController {
             return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
         }
     }
-    
-    private static final HttpTransport transport = new NetHttpTransport();
-    private static final JsonFactory jsonFactory = new JacksonFactory();
-    
-//    @PostMapping("/oauth2/authorization/google")
-//    public ResponseEntity<AuthResponse> googleLogin(@RequestBody Map<String, String> payload) {
-//        String googletoken = payload.get("token");
-//        GoogleIdToken idToken = null;
-//        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-//                .setAudience(Collections.singletonList(CLIENT_ID))
-//                .build();
-//        try {
-//            idToken =  verifier.verify(googletoken);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
-//
-//        GoogleIdToken.Payload googlePayload = idToken.getPayload();
-//        String email = googlePayload.getEmail();
-//
-//        try {
-//            UserDTO user = userService.getUserByEmail(email);
-//            Authentication authentication = authenticate(user.getEmail(),user.getPassword());
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//            String token = JwtProvider.generateToken(authentication);
-//            AuthResponse authResponse = new AuthResponse();
-//
-//            authResponse.setMessage("Login success");
-//            authResponse.setJwt(token);
-//            authResponse.setStatus(true);
-//
-//            return new ResponseEntity<>(authResponse, HttpStatus.OK);
-//        } catch (Exception e) {
-//            AuthResponse authResponse = new AuthResponse();
-//            authResponse.setMessage("Login failed: " + e.getMessage());
-//            authResponse.setStatus(false);
-//            return new ResponseEntity<>(authResponse, HttpStatus.UNAUTHORIZED);
-//        }
-//
-//    }
 
 
     private Authentication authenticate(String username, String password) {
@@ -175,8 +122,12 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public Authentication logout(HttpServletRequest request, HttpServletResponse response) {
-      return SecurityContextHolder.getContext().getAuthentication();
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request,response, auth);
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/profile")

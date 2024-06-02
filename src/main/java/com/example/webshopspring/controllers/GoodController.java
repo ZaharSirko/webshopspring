@@ -44,12 +44,15 @@ public class GoodController {
     }
 
     @PostMapping("/good/add")
-    public  ResponseEntity<Good>  addNewGood(@ModelAttribute Good newGood,@RequestParam("imageFile") MultipartFile[] imageFile) throws IOException {
-            String[] photosPath = new String[imageFile.length];
-            for (int i = 0; i < imageFile.length; i++) {
-                photosPath[i] = imageService.saveImage(imageFile[i]);
-            }
-          return new ResponseEntity<>( goodService.addGood(newGood.getGoodName(), newGood.getGoodDescription(), newGood.getGoodBrand(),
-                  photosPath), HttpStatus.CREATED);
+    public ResponseEntity<Good> addNewGood(@RequestParam("goodName") String goodName,
+                                           @RequestParam("goodDescription") String goodDescription,
+                                           @RequestParam("goodBrand") String goodBrand,
+                                           @RequestParam("imageFile") MultipartFile[] imageFiles) throws IOException {
+        String[] photosPath = new String[imageFiles.length];
+        for (int i = 0; i < imageFiles.length; i++) {
+            photosPath[i] = imageService.saveImage(imageFiles[i]);
+        }
+        return new ResponseEntity<>(goodService.addGood(goodName, goodDescription, goodBrand, photosPath), HttpStatus.OK);
     }
+
 }

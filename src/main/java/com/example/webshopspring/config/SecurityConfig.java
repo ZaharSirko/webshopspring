@@ -68,18 +68,10 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-//            .formLogin((form) -> form
-//                .loginPage("/log-in")
-//                .defaultSuccessUrl("/", true)
-//                .permitAll()
-//            )
             .oauth2Login(oc -> oc
-            .loginPage("/log-in")
+            .loginPage("/oauth2/google")
             .defaultSuccessUrl("http://localhost:3000/", true)
             .permitAll())
-//                .oauth2ResourceServer(
-//                        OAuth2ResourceServerConfigurer::jwt
-//                )
             .logout((logout) -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
