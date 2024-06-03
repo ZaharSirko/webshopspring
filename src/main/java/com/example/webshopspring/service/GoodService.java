@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -43,8 +44,14 @@ public class GoodService {
         List<Good> goods = goodRepository.findAll();
         Map<Long, Price> priceMap = priceService.getPricesMappedByGoodId();
         String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-        return GoodWithPriceMapper.toDTOList(goods, priceMap, baseUrl);
+
+        List<Good> goodsWithPrices = goods.stream()
+                .filter(good -> priceMap.containsKey(good.getId()))
+                .collect(Collectors.toList());
+
+        return GoodWithPriceMapper.toDTOList(goodsWithPrices, priceMap, baseUrl);
     }
+
 
     public Good addGood(String goodName, String goodDescription, String goodBrand, String[] goodPhoto){
         Good newGood = new Good();
@@ -57,9 +64,6 @@ public class GoodService {
         return goodRepository.save(newGood);
     }
 
-    public Good addGood(Good good){
-        return goodRepository.save(good);
-    }
 
 //    public  boolean deleteGood(Good good){
 //        return  true;
