@@ -44,5 +44,4 @@ public class CardController {
         cardService.removeGoodFromUserCard(cardId);
         return "redirect:/card/" + userName;
     }
-
 }
