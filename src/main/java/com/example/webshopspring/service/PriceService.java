@@ -23,8 +23,8 @@ public class PriceService {
     public List<Price> getAllPrices() {
         return priceRepository.findAll();
     }
-    public void addPrice(Price price) {
-        priceRepository.save(price);
+    public Price addPrice(Price price) {
+       return priceRepository.save(price);
     }
     public  boolean savePrice(Price price) {
         Price priceFromDb = priceRepository.findById(price.getId()).orElse(null);

@@ -36,8 +36,9 @@ public class GoodService {
         return GoodWithPriceMapper.toDTO(good, price, baseUrl);
     }
 
-    public Good getGoodByName(String name){
-        return   goodRepository.findByGoodName(name).orElse(null);
+
+    public List<Good> getGoodsWitOutPrice(){
+        return goodRepository.findGoodsWithoutPrice();
     }
 
     public List<GoodWithPriceDTO> getAllGoodsWithPrices() {
@@ -63,6 +64,7 @@ public class GoodService {
 
         return goodRepository.save(newGood);
     }
+
 
 
 //    public  boolean deleteGood(Good good){

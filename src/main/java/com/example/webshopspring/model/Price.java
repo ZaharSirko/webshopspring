@@ -25,7 +25,7 @@ public class Price {
     private Long id;
 
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "good_id")
     private Good good_id;
 

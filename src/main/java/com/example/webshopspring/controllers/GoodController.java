@@ -54,6 +54,6 @@ public class GoodController {
             photosPath[i] = imageService.saveImage(imageFiles[i]);
         }
         Good addedGood = goodService.addGood(newGood.getGoodName(), newGood.getGoodDescription(), newGood.getGoodBrand(), photosPath);
-        return new ResponseEntity<>(addedGood, HttpStatus.OK);
+        return new ResponseEntity<>(addedGood, HttpStatus.CREATED);
     }
 }
