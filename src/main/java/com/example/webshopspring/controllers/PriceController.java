@@ -37,14 +37,19 @@ public class PriceController {
         }
     }
 
-//    @GetMapping("/price/edit/{priceId}")
-//    public void price(@PathVariable Long priceId) {
-//        Price price = priceService.getPriceById(priceId);
-//        List<Good> good = goodService.getAllGoods();
-//    }
-//
-//    @PostMapping("/price/edit/{priceId}")
-//    public boolean edit(@PathVariable Long priceId, @ModelAttribute Price updatedPrice) {
-//        return  priceService.updatePrice(priceId, updatedPrice);
-//    }
+    @GetMapping("/price/edit/{priceId}")
+    public ResponseEntity<Price> price(@PathVariable Long priceId) {
+        Price price = priceService.getPriceById(priceId);
+        return new ResponseEntity<>(price, HttpStatus.OK);
+    }
+
+    @PutMapping("/price/edit/{priceId}")
+    public ResponseEntity<Boolean> updatePrice(@PathVariable Long priceId, @RequestBody Price updatedPrice) {
+        boolean isUpdated = priceService.updatePrice(priceId, updatedPrice);
+        if (isUpdated) {
+            return new ResponseEntity<>(isUpdated, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+    }
 }

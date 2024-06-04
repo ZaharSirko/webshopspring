@@ -39,14 +39,6 @@ public class PriceService {
         return prices.stream().collect(Collectors.toMap(price -> price.getGood_id().getId(), price -> price));
     }
 
-    public Price getPriceForGoodId(Long id) {
-        return priceRepository.findPriceForGoodId(id).orElse(null);
-    }
-
-    public List<Price> getAllPriceForGood(Good good) {
-        return  priceRepository.findByGood(good);
-    }
-
     public  boolean updatePrice(Long id, Price updatedPrice) {
         Price existingPrice = getPriceById(id);
         if (existingPrice != null) {

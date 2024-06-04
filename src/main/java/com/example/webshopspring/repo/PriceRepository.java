@@ -17,8 +17,4 @@ public interface PriceRepository extends JpaRepository<Price, Long> {
 
     @Query("SELECT p FROM Price p WHERE p.good_id.id = :id")
     Optional<Price> findPriceForGoodId(@Param("id") Long id);
-
-    @Query("SELECT p FROM Price p WHERE p.good_id = :good")
-    List<Price> findByGood(Good good);
-//Price findByPrice(Price price);
 }
