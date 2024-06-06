@@ -68,10 +68,6 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .oauth2Login(oc -> oc
-            .loginPage("/oauth2/google")
-            .defaultSuccessUrl("http://localhost:3000/", true)
-            .permitAll())
             .logout((logout) -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
