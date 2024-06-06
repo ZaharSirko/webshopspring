@@ -18,13 +18,11 @@ import java.util.stream.Collectors;
 @Service
 public class GoodService {
     private final GoodRepository  goodRepository;
-    private final GoodWithPriceMapper goodWithPriceMapper;
     private final PriceService priceService;
     private final PriceRepository priceRepository;
 
-    public GoodService(GoodRepository goodRepository, GoodWithPriceMapper goodWithPriceMapper, PriceService priceService, PriceRepository priceRepository) {
+    public GoodService(GoodRepository goodRepository, PriceService priceService, PriceRepository priceRepository) {
         this.goodRepository = goodRepository;
-        this.goodWithPriceMapper = goodWithPriceMapper;
         this.priceService = priceService;
         this.priceRepository = priceRepository;
     }
@@ -32,8 +30,7 @@ public class GoodService {
     public  GoodWithPriceDTO  getGoodWithPriceById(Long id) {
         Good good = goodRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Good not found"));
         Price price = priceRepository.findPriceForGoodId(id).orElseThrow(() -> new ResourceNotFoundException("Price not found for Good id: " + id));
-        String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-        return GoodWithPriceMapper.toDTO(good, price, baseUrl);
+        return GoodWithPriceMapper.toDTO(good, price);
     }
 
 
@@ -44,13 +41,12 @@ public class GoodService {
     public List<GoodWithPriceDTO> getAllGoodsWithPrices() {
         List<Good> goods = goodRepository.findAll();
         Map<Long, Price> priceMap = priceService.getPricesMappedByGoodId();
-        String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
 
         List<Good> goodsWithPrices = goods.stream()
                 .filter(good -> priceMap.containsKey(good.getId()))
                 .collect(Collectors.toList());
 
-        return GoodWithPriceMapper.toDTOList(goodsWithPrices, priceMap, baseUrl);
+        return GoodWithPriceMapper.toDTOList(goodsWithPrices, priceMap);
     }
 
 

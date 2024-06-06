@@ -2,6 +2,7 @@ package com.example.webshopspring.DTO.mapper;
 
 
 import com.example.webshopspring.DTO.UserDTO;
+import com.example.webshopspring.model.Role;
 import com.example.webshopspring.model.User;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +19,11 @@ public class UserMapper {
                 user.getAdress(),
                 user.getAuthorities().stream().map(r -> r.getAuthority()).collect(Collectors.toList()),
                 user.getUsername());
+    }
+
+    public static User toUserId(UserDTO userDTO){
+        User user = new User();
+        user.setId(userDTO.id());
+        return user;
     }
 }

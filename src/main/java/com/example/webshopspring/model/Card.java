@@ -24,12 +24,6 @@ public class Card {
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @NotNull
-//    @ManyToOne
-//    @JoinColumn(name = "good_id")
-//    private Good good;
-
-
     @NotNull
     @ManyToOne
     @JoinColumn(name = "price_id")
@@ -59,11 +53,4 @@ public class Card {
         this.price = price;
     }
 
-//    public Good getGood() {
-//        return good;
-//    }
-//
-//    public void setGood(Good good) {
-//        this.good = good;
-//    }
 }

@@ -1,20 +1,19 @@
 package com.example.webshopspring.controllers;
 
+import com.example.webshopspring.DTO.CardDTO;
 import com.example.webshopspring.model.Card;
 import com.example.webshopspring.service.CardService;
-import com.example.webshopspring.service.GoodService;
-import com.example.webshopspring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.security.Principal;
+import java.util.List;
 
 
 @RestController
-@CrossOrigin("http://localhost:3000")
 public class CardController {
     private final CardService cardService;
 
@@ -23,18 +22,24 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @GetMapping("/card/{user_email}")
-    public Card viewCard(@PathVariable("user_email") String userEmail) {
-       return cardService.getCardByUserEmail(userEmail);
+
+
+    @GetMapping("/profile/card")
+    public ResponseEntity<List<CardDTO>> viewCard(Principal principal) {
+        String email = principal.getName();
+        List<CardDTO> cardDTOs = cardService.getCardListDTOByUserEmail(email);
+        return new ResponseEntity<>(cardDTOs, HttpStatus.OK);
     }
 
-// @PostMapping("/good/{id}")
-//    public boolean addGoodToUserCard(@PathVariable("id") Long id, Principal principal) {
-//       return  cardService.addGoodToUserCard(id, principal.getName());
-// }
 
-    @PostMapping(value = "/card/{userName}/cancel/{cardId}")
-    public void cancelTourReservation( @PathVariable String userName,@PathVariable Long cardId ) {
+    @PostMapping("/good/{id}")
+    public ResponseEntity<Boolean> addGoodToUserCard(@PathVariable("id") Long id, Principal principal) {
+       boolean isAddedToCard = cardService.addGoodToUserCard(id, principal.getName());
+       return new ResponseEntity<>(isAddedToCard, HttpStatus.OK);
+     }
+
+    @PostMapping(value = "/profile/card/cancel/{cardId}")
+    public void cancelTourReservation(@PathVariable Long cardId ) {
         cardService.removeGoodFromUserCard(cardId);
     }
 

@@ -7,6 +7,7 @@ public record GoodWithPriceDTO(
         String goodBrand,
         String[] goodPhoto,
         int goodLikes,
+        Long priceId,
         double clientPrice
 ) {
 }
