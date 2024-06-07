@@ -1,0 +1,456 @@
+openapi: 3.0.1
+info:
+  title: Your API
+  description: API documentation
+  version: "1.0"
+paths:
+  /profile/card:
+    get:
+      summary: View card
+      tags:
+        - Card
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CardDTO'
+
+  /profile/card/cancel/{cardId}:
+    post:
+      summary: Cancel tour reservation
+      tags:
+        - Card
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+
+  /:
+    get:
+      summary: Get all goods
+      tags:
+        - Good
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GoodWithPriceDTO'
+
+  /good/{id}:
+    get:
+      summary: Get good with price by ID
+      tags:
+        - Good
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoodWithPriceDTO'
+    post:
+      summary: Add good to user card
+      tags:
+        - Card
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+
+  /good/add:
+    post:
+      summary: Add new good
+      tags:
+        - Good
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                newGood:
+                  $ref: '#/components/schemas/Good'
+                imageFile:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Good'
+
+  /static/{imageName}:
+    get:
+      summary: Get image
+      tags:
+        - Image
+      parameters:
+        - name: imageName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+
+  /about:
+    get:
+      summary: About
+      tags:
+        - Main
+      responses:
+        '200':
+          description: OK
+
+  /price/add:
+    get:
+      summary: Get price form
+      tags:
+        - Price
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Good'
+
+    post:
+      summary: Add new price
+      tags:
+        - Price
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Price'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+
+  /price/edit/{priceId}:
+    get:
+      summary: Get price by ID
+      tags:
+        - Price
+      parameters:
+        - name: priceId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+
+    put:
+      summary: Update price
+      tags:
+        - Price
+      parameters:
+        - name: priceId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Price'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '404':
+          description: Not Found
+
+  /sign-in:
+    get:
+      summary: Registration form
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+
+    post:
+      summary: Register new user
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+  /log-in:
+    get:
+      summary: Login form
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+
+    post:
+      summary: User login
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+  /logout:
+    get:
+      summary: Logout
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+
+  /profile:
+    get:
+      summary: Get user profile
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+
+  /profile/status:
+    get:
+      summary: Get user status
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: boolean
+
+  /profile/edit:
+    put:
+      summary: Edit user profile
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+
+components:
+  schemas:
+    CardDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        good:
+          $ref: '#/components/schemas/GoodWithPriceDTO'
+
+    GoodWithPriceDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        goodName:
+          type: string
+        goodDescription:
+          type: string
+        goodBrand:
+          type: string
+        goodPhoto:
+          type: array
+          items:
+            type: string
+        goodLikes:
+          type: integer
+        priceId:
+          type: integer
+        clientPrice:
+          type: number
+
+    Good:
+      type: object
+      properties:
+        goodName:
+          type: string
+        goodDescription:
+          type: string
+        goodBrand:
+          type: string
+        goodPhoto:
+          type: array
+          items:
+            type: string
+        goodLikes:
+          type: integer
+
+    Price:
+      type: object
+      properties:
+        id:
+          type: integer
+        good_id:
+          $ref: '#/components/schemas/Good'
+        supplier_price:
+          type: number
+        client_price:
+          type: number
+        bought_amount:
+          type: integer
+        sold_amount:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        deleted_at:
+          type: string
+          format: date-time
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        password:
+          type: string
+        real_name:
+          type: string
+        phoneNumber:
+          type: string
+        adress:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        username:
+          type: string
+
+    UserDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        real_name:
+          type: string
+        phoneNumber:
+          type: string
+        adress:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        username:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        jwt:
+          type: string
+        message:
+          type: string
+        status:
+          type: boolean
