@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class GoodController {
@@ -55,5 +56,21 @@ public class GoodController {
         }
         Good addedGood = goodService.addGood(newGood.getGoodName(), newGood.getGoodDescription(), newGood.getGoodBrand(), photosPath);
         return new ResponseEntity<>(addedGood, HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/good/search")
+    public List<Long> searchGoods(@RequestParam String query) {
+        if (Objects.equals(query, "")) {
+            return null;
+        }
+        return goodService.searchGoods(query);
+    }
+    @GetMapping("/good/search-suggestions")
+    public List<String> getSearchSuggestions(@RequestParam String query) {
+        if (query == null) {
+            return null;
+        }
+        return goodService.getSearchSuggestions(query);
     }
 }

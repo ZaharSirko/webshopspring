@@ -8,7 +8,6 @@ import com.example.webshopspring.repo.GoodRepository;
 import com.example.webshopspring.repo.PriceRepository;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -62,19 +61,19 @@ public class GoodService {
     }
 
 
+    public List<String> getSearchSuggestions(String query) {
+        return goodRepository.findTop10ByGoodNameContainingIgnoreCase(query)
+                .stream()
+                .map(Good::getGoodName)
+                .collect(Collectors.toList());
+    }
 
-//    public  boolean deleteGood(Good good){
-//        return  true;
-//    }
-//    public boolean updateGood(Long id,Good good){
-//        Good existingGood = getGoodById(id);
-//        if(existingGood != null){
-//
-//
-//            return  true;
-//        }
-//        return false;
-//    }
+    public List<Long> searchGoods(String query) {
+        List<Good> goods = goodRepository.findByGoodNameContainingIgnoreCase(query);
+        return goods.stream()
+                .map(Good::getId)
+                .collect(Collectors.toList());
+    }
 
 
 }

@@ -39,7 +39,7 @@ public class CardController {
      }
 
     @PostMapping(value = "/profile/card/cancel/{cardId}")
-    public void cancelTourReservation(@PathVariable Long cardId ) {
+    public void cancelGoodFormCard(@PathVariable Long cardId ) {
         cardService.removeGoodFromUserCard(cardId);
     }
 

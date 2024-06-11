@@ -137,15 +137,6 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("/profile/status")
-    public ResponseEntity<Boolean> getStatus(Principal principal) {
-        String username = principal.getName();
-        if (username != null) {
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
-    }
-
     @PutMapping("/profile/edit")
     public ResponseEntity<Boolean> editUser( Principal principal, @RequestBody User updatedUser) {
         String username = principal.getName();
