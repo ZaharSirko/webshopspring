@@ -1,7 +1,6 @@
 package com.example.webshopspring.controllers;
 
 import com.example.webshopspring.DTO.CardDTO;
-import com.example.webshopspring.model.Card;
 import com.example.webshopspring.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

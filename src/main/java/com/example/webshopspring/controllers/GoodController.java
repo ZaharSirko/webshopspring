@@ -2,23 +2,15 @@ package com.example.webshopspring.controllers;
 
 import com.example.webshopspring.DTO.GoodWithPriceDTO;
 import com.example.webshopspring.model.Good;
-import com.example.webshopspring.model.Price;
-import com.example.webshopspring.model.User;
 import com.example.webshopspring.service.GoodService;
 import com.example.webshopspring.service.ImageService;
 import com.example.webshopspring.service.PriceService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.List;
@@ -47,6 +39,7 @@ public class GoodController {
        return new ResponseEntity<>(goodWithPriceDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/good/add")
     public ResponseEntity<Good> addNewGood(@ModelAttribute  Good newGood,
                                            @RequestParam("imageFile") MultipartFile[] imageFiles) throws IOException {
