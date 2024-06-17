@@ -51,19 +51,19 @@ public class GoodController {
         return new ResponseEntity<>(addedGood, HttpStatus.CREATED);
     }
 
-
     @GetMapping("/good/search")
-    public List<Long> searchGoods(@RequestParam String query) {
+    public ResponseEntity<List<Long>> searchGoods(@RequestParam String query) {
         if (Objects.equals(query, "")) {
-            return null;
+            return new ResponseEntity<>( null, HttpStatus.BAD_REQUEST);
         }
-        return goodService.searchGoods(query);
+        return new ResponseEntity<>(goodService.searchGoods(query), HttpStatus.OK);
     }
+
     @GetMapping("/good/search-suggestions")
-    public List<String> getSearchSuggestions(@RequestParam String query) {
+    public ResponseEntity<List<String>> getSearchSuggestions(@RequestParam String query) {
         if (query == null) {
-            return null;
+            return  new ResponseEntity<>( null, HttpStatus.BAD_REQUEST);
         }
-        return goodService.getSearchSuggestions(query);
+        return new ResponseEntity<>(goodService.getSearchSuggestions(query), HttpStatus.OK);
     }
 }

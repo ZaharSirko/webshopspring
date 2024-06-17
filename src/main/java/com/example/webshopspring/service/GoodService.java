@@ -32,7 +32,6 @@ public class GoodService {
         return GoodWithPriceMapper.toDTO(good, price);
     }
 
-
     public List<Good> getGoodsWitOutPrice(){
         return goodRepository.findGoodsWithoutPrice();
     }
@@ -48,7 +47,6 @@ public class GoodService {
         return GoodWithPriceMapper.toDTOList(goodsWithPrices, priceMap);
     }
 
-
     public Good addGood(String goodName, String goodDescription, String goodBrand, String[] goodPhoto){
         Good newGood = new Good();
         newGood.setGoodName(goodName);
@@ -56,7 +54,6 @@ public class GoodService {
         newGood.setGoodBrand(goodBrand);
         newGood.setGoodPhoto(goodPhoto);
         newGood.setGoodLikes(0);
-
         return goodRepository.save(newGood);
     }
 

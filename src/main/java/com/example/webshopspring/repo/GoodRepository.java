@@ -11,9 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface GoodRepository extends JpaRepository<Good, Long> {
-    @Query("SELECT g FROM Good g Where g.id = :id")
-    Optional<Good> findById(@Param("id") long id);
-
     @Query("SELECT g FROM Good g WHERE NOT EXISTS (SELECT 1 FROM Price p WHERE p.good_id.id = g.id)")
     List<Good> findGoodsWithoutPrice();
 

@@ -41,14 +41,6 @@ public class Good {
     @Column(name = "good_likes")
     private int goodLikes;
 
-//
-//    @ManyToOne
-//    @JoinColumn(name = "price_id")
-//    private Price goodPrice;
-
-//    @OneToMany(mappedBy = "good", cascade = CascadeType.ALL)
-//    private Set<Card> good = new HashSet<>();
-
 
     public Good(long id, String goodName, String goodDescription, String goodBrand, String[] goodPhoto, int goodLikes) {
 
@@ -111,11 +103,5 @@ public class Good {
         this.goodLikes = goodLikes;
     }
 
-//    public Price getGoodPrice() {
-//        return goodPrice;
-//    }
-//
-//    public void setGoodPrice(Price goodPrice) {
-//        this.goodPrice = goodPrice;
-//    }
+
 }

@@ -16,7 +16,8 @@ create table users
     user_password     varchar(255) not null,
     user_phone_number varchar(255),
     user_email        varchar(255) not null,
-    user_real_name    varchar(255)
+    user_real_name    varchar(255),
+    matching_password varchar(255)
 );
 
 create unique index unique_email
@@ -41,8 +42,7 @@ create table goods
     good_description varchar(255)   not null,
     good_likes       integer,
     good_name        varchar(255)   not null,
-    good_photo       varchar(255)[] not null,
-    price_id         bigint
+    good_photo       varchar(255)[] not null
 );
 
 create table prices
@@ -60,27 +60,15 @@ create table prices
             references goods
 );
 
-alter table goods
-    add constraint fk2bgi34b5shv2w1w0ntsfp2e5p
-        foreign key (price_id) references prices;
-
 create table card
 (
-    id      bigint not null
+    id       bigint not null
         primary key,
-    good_id bigint
-        constraint fkc2panvvu6j74urelpb1uwuuo
-            references goods,
-    user_id bigint
+    user_id  bigint not null
         constraint fkq5apcc4ddrab8t48q2uqvyquq
-            references users
-);
-
-create table types
-(
-    type_id    bigint       not null
-        primary key,
-    deleted_at varchar(255),
-    type_name  varchar(255) not null
+            references users,
+    price_id bigint not null
+        constraint fkq0hw9vg3h711qfugoof7y647c
+            references prices
 );
 
